@@ -1,0 +1,103 @@
+.login {
+  height: 100vh;
+  display: flex;
+}
+
+.login .leftContainer {
+  padding: 3rem;
+  width: 50%;
+  height: 100%;
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.login .leftContainer h2 {
+  margin-left: 3rem;
+}
+
+.login .content {
+  margin-left: 3rem;
+  margin-top: 4rem;
+}
+
+.login .content ul {
+  list-style-type: none;
+  margin-left: 1.5rem;
+  line-height: 42px;
+  text-transform: capitalize;
+  font-weight: 100;
+  margin-top: 1.4rem;
+}
+
+.login .content li {
+  position: relative;
+  padding-left: 0.5rem;
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.login .content li::before {
+  position: absolute;
+  top: 1.15rem;
+  left: -1rem;
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--orange);
+  display: block;
+}
+
+.login .rightContainer {
+  padding: 3rem;
+  width: 50%;
+  height: 100%;
+}
+.login .rightContainer a {
+  color: var(--orange);
+}
+
+.login .rightContainer input {
+  border-color: var(--blue);
+}
+
+.login .rightContainer input:focus {
+  box-shadow: 0 0 0 0.25rem rgb(44 44 124 / 25%);
+}
+
+.loginBtn {
+  background-color: var(--orange);
+  font-size: 20px;
+  padding: 0.5rem 1.4rem;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.loginBtn:hover {
+  color: #fff;
+  background-color: var(--green);
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    flex-direction: column;
+  }
+  .login .leftContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .login .leftContainer .header {
+    display: flex;
+    justify-content: center;
+  }
+  .login .leftContainer .content {
+    display: none;
+  }
+  .login .rightContainer {
+    width: 100%;
+  }
+}

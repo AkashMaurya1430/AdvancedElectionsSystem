@@ -9,5 +9,12 @@ a {
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration: underline;
+}
+
+:root {
+  --blue: #2c2c7c;
+  --orange: #f58220;
+  --green: #4db64c;
+  --white: #fff;
 }
