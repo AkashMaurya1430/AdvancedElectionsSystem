@@ -11,8 +11,8 @@
   color: var(--white);
 }
 
-.login .leftContainer h2 {
-  margin-left: 3rem;
+.login .leftContainer .header img {
+  width: 3rem;
 }
 
 .login .content {

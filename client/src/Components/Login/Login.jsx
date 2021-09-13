@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Register from "../Register/Register";
+import Logo from "../Images/logo.png";
 import "./Login.css";
 
 const Login = () => {
@@ -13,8 +14,14 @@ const Login = () => {
     <>
       <div className="login">
         <div className="leftContainer">
-          <div className="header w-100">
-            <h2>Voter Portal</h2>
+          <div className="header w-100 d-flex align-items-center flex-md-row flex-column">
+            <div className="col-auto p-0">
+              <img src={Logo} alt="" />
+            </div>
+            <div className="col ms-md-2">
+              <h2 className="mb-0 mt-md-0 mt-2">Voter Portal</h2>
+              <span>Every Vote Counts</span>
+            </div>
           </div>
           <div className="content">
             <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h1>
