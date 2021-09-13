@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Register from "../Register/Register";
 import "./Login.css";
 
 const Login = () => {
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  function hideRegisterModal() {
+    setShowRegisterModal(false);
+  }
+
   return (
     <>
       <div className="login">
@@ -24,7 +30,16 @@ const Login = () => {
         <div className="rightContainer">
           <h2>Login</h2>
           <h5 className="fw-normal" style={{ fontSize: "1.1rem" }}>
-            Don't have an account? <Link to="/register">Create one</Link>
+            Don't have an account?{" "}
+            <Link
+              to="/"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowRegisterModal(true);
+              }}
+            >
+              Create one
+            </Link>
           </h5>
           <form className="loginForm mt-5  needs-validation">
             <div class="mb-3">
@@ -50,6 +65,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <Register show={showRegisterModal} handleModal={hideRegisterModal} />
     </>
   );
 };

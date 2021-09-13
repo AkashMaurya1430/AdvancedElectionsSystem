@@ -94,10 +94,15 @@
     display: flex;
     justify-content: center;
   }
+  .login .leftContainer h2 {
+    margin-left: 0rem;
+  }
+
   .login .leftContainer .content {
     display: none;
   }
   .login .rightContainer {
     width: 100%;
+    padding: 2rem;
   }
 }
