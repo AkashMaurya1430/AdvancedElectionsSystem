@@ -1,15 +1,19 @@
-* {
+*,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
 }
 
-a {
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
+img {
+  max-width: 100%;
 }
 
 .cursor-pointer {
@@ -19,6 +23,43 @@ a:hover {
 :root {
   --blue: #2c2c7c;
   --orange: #f58220;
+  --darkOrange: #dd6d0c;
   --green: #4db64c;
   --white: #fff;
+  --greyText: #7e818d;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input,
+textarea {
+  border-color: var(--greyText) !important;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+main {
+  padding: 0.5rem 1rem;
+}
+
+.pageTitle {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.pageSubTitle {
+  color: var(--greyText);
+  font-weight: 500;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    margin-left: 158px;
+    padding: 1.5rem;
+  }
 }

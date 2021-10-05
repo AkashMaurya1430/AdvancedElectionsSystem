@@ -1,0 +1,41 @@
+.candidates {
+  margin: 0 auto;
+  justify-items: center;
+  align-items: center;
+}
+
+.candidate {
+  padding: 1rem;
+  transition-duration: 0.6s;
+  border: 0.5px solid var(--blue);
+}
+
+.candidate:hover {
+  box-shadow: 0px 5px 60px -30px grey;
+}
+
+.candidate::before {
+  position: absolute;
+  content: "";
+  width: 8rem;
+  top: -1px;
+  left: 1rem;
+  height: 2.1px;
+  background-color: var(--orange);
+}
+
+.candidateImage {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  box-shadow: 0px 5px 5px 0px grey;
+}
+
+.candidateName {
+  font-size: 1.1rem;
+}
+
+.candidatesHighestEdu {
+  font-size: 0.9rem;
+  color: grey;
+}

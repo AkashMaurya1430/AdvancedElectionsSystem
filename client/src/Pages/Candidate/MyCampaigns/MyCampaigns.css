@@ -1,0 +1,12 @@
+.addNewCampaignBtn {
+  background-color: var(--orange);
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.addNewCampaignBtn:hover {
+  color: #fff;
+  background-color: var(--darkOrange);
+}
