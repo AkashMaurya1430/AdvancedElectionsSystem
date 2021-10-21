@@ -18,20 +18,24 @@ const Sidebar = () => {
 
           <div className="nav__list">
             <div className="nav__items">
+              {/* Common */}
               <NavLink className="nav__link" activeClassName="nav__link-active" to={Routes.campaigns}>
                 <i className="bx bx-home nav__icon"></i>
                 <span className="nav__name">Dashboard</span>
-              </NavLink>
-
-              <NavLink className="nav__link" activeClassName="nav__link-active" to={Routes.editProfile}>
-                <i className="bx bx-user nav__icon"></i>
-                <span className="nav__name">Profile</span>
               </NavLink>
 
               <NavLink className="nav__link" activeClassName="nav__link-active" to={Routes.candidates}>
                 <i className="bx bx-group nav__icon"></i>
                 <span className="nav__name">Candidates</span>
               </NavLink>
+
+              {/* Candidate  */}
+              <NavLink className="nav__link" activeClassName="nav__link-active" to={Routes.candidateEditProfile}>
+                <i className="bx bx-user nav__icon"></i>
+                <span className="nav__name">Profile</span>
+              </NavLink>
+
+              {/* Voter  */}
 
               {/* <NavLink className="nav__link" activeClassName="nav__link-active" to="/voter/slots">
                 <i className="bx bx-calendar-plus nav__icon"></i>

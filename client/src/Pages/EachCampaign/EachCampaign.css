@@ -1,0 +1,74 @@
+.eachCampaignPage .campaignTitle {
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.campaignAuthor {
+  margin: 2rem auto;
+  justify-content: center;
+  position: relative;
+  padding-top: 0.5rem;
+}
+
+.campaignAuthor::before {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  width: 90%;
+  max-width: 90%;
+  height: 1px;
+  background-color: var(--greyText);
+}
+.campaignAuthor img {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+}
+
+.campaignAuthorName {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.campaignAuthor p {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.campaignAuthor span:nth-child(2)::before {
+  content: ".";
+  position: absolute;
+  top: -1rem;
+  left: 0px;
+  font-size: 1.5rem;
+}
+
+.eachCampaignPage .candidateSocialLinks {
+  margin-left: 100px;
+}
+
+.eachCampaignPage .candidateSocialLinks i {
+  margin: 0 0.2rem;
+}
+
+.eachCampaignPage .campaignImage {
+  max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .eachCampaignPage .campaignTitle {
+    width: 75%;
+  }
+  .campaignAuthor::before {
+    width: 400px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .eachCampaignPage .campaignTitle {
+    width: 65%;
+  }
+  .campaignAuthor::before {
+    width: 500px;
+  }
+}

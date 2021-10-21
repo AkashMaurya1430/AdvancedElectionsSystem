@@ -1,0 +1,92 @@
+.eachCandidatePage {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.leftContainer {
+  width: 100%;
+}
+
+.eachCandidatePage .aboutContainer {
+  border: 1px solid var(--borderColor);
+  border-radius: 20px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.eachCandidatePage .aboutContainer h5 {
+  color: var(--blue);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.eachCandidatePage .aboutContainer p {
+  color: var(--greyText);
+  font-size: 0.9rem;
+}
+
+.rightContainer {
+  width: 100%;
+}
+
+.rightContainer .candidateProfileCard {
+  width: 270px;
+  max-width: 100%;
+  border: 1px solid var(--borderColor);
+  border-radius: 20px;
+  padding-bottom: 1rem;
+  position: relative;
+  margin: 0 auto;
+}
+
+.candidateProfileCardCover {
+  background-color: blue;
+  height: 6rem;
+  border-radius: 20px 20px 0 0;
+}
+
+.candidateProfileImg {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  position: absolute;
+  top: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  object-fit: fill;
+}
+
+.candidateProfileCard h5 {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.candidateSocialLinks {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.candidateSocialLinks i {
+  font-size: 1.5rem;
+  margin: 0 0.4rem;
+}
+.eachCandidatePage .agenda:hover {
+  background-color: transparent;
+}
+@media screen and (min-width: 768px) {
+  .eachCandidatePage {
+    display: flex;
+    flex-direction: row;
+  }
+  .rightContainer {
+    width: fit-content;
+  }
+  .rightContainer .candidateProfileCard {
+    position: sticky;
+    top: 0px;
+    margin: 0;
+  }
+  .eachCandidatePage .aboutContainer {
+    margin-top: 0;
+  }
+}

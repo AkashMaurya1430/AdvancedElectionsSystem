@@ -1,5 +1,6 @@
 import React from "react";
 import Masonry from "react-masonry-css";
+import * as Routes from "../../Routes";
 import "./Campaigns.css";
 
 const Campaigns = () => {
@@ -10,14 +11,16 @@ const Campaigns = () => {
   };
   return (
     <>
-      <main>
+      <main className="campaigns">
         <h4 className="pageTitle mb-1">All Campaigns</h4>
 
         <Masonry breakpointCols={breakpointColumnsObj} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
           <div className="campaign">
             <div className="d-flex align-items-center campaignHeader">
               <img src="https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg" alt="" />
-              <h6 className="ms-2">Lorem Ipsum</h6>
+              <h6 className="ms-2">
+                <a href={Routes.eachCandidate}>Lorem Ipsum</a>
+              </h6>
             </div>
             <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
             <img
@@ -31,7 +34,12 @@ const Campaigns = () => {
               optio quod magnam soluta laboriosam a, beatae minus sunt. Consequuntur, aliquam?
             </p>
             <div className="campaignFooter">
-              <span className="cursor-pointer">Readmore</span> <span className="ps-2 position-relative">3 min read</span>
+              <span className="cursor-pointer">
+                <a className="p-0" href={Routes.eachCampaign}>
+                  Readmore
+                </a>
+              </span>{" "}
+              <span className="ps-2 position-relative">3 min read</span>
             </div>
           </div>
         </Masonry>

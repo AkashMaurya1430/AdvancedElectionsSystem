@@ -6,8 +6,9 @@
 
 .candidate {
   padding: 1rem;
-  transition-duration: 0.6s;
+  transition-duration: 0.3s;
   border: 0.5px solid var(--blue);
+  position: relative;
 }
 
 .candidate:hover {
@@ -30,12 +31,55 @@
   border-radius: 50%;
   box-shadow: 0px 5px 5px 0px grey;
 }
+.candidateName {
+  color: #000;
+  text-decoration: none !important;
+}
+.candidateSocials {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+}
 
+.candidateSocials i {
+  margin: 5px 0;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.bxl-twitter {
+  color: #1da1f2;
+}
+
+.bxl-facebook {
+  color: #4267b2;
+}
+.bxl-instagram-alt {
+  background: #d6249f;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .candidateName {
   font-size: 1.1rem;
+  cursor: pointer;
 }
 
 .candidatesHighestEdu {
   font-size: 0.9rem;
   color: grey;
+}
+
+@media screen and (max-width: 578px) {
+  .candidateImage {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .candidateSocials i {
+    margin: 4px 0;
+    font-size: 1.1rem;
+  }
 }

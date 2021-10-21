@@ -1,0 +1,28 @@
+.slotBookingPage .slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.slotBookingPage .slot {
+  border: 1px solid var(--blue);
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.bookSlotBtn {
+  padding: 0.5rem 4rem;
+  border: 1px solid var(--darkOrange);
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--darkOrange);
+}
+
+.bookSlotBtn:hover {
+  background-color: var(--orange);
+  color: #fff;
+}

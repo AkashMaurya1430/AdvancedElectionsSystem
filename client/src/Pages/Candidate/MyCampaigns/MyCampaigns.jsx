@@ -52,8 +52,16 @@ const MyCampaigns = () => {
 
             <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
 
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer "
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
             </div>
           </div>
 
@@ -66,8 +74,16 @@ const MyCampaigns = () => {
 
             <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
 
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
             </div>
           </div>
           <div className="campaign">
@@ -79,42 +95,31 @@ const MyCampaigns = () => {
 
             <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
 
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
             </div>
           </div>
           <div className="campaign">
             <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
 
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <img
-              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
-              alt=""
-              className="campaignImage m-0"
-            />
-
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
-
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
-
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
-
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
             </div>
           </div>
           <div className="campaign">
@@ -126,8 +131,67 @@ const MyCampaigns = () => {
 
             <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
 
-            <div className="campaignFooter mt-1">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div className="campaign">
+            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div className="campaign">
+            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div className="campaign">
+            <img
+              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
+              alt=""
+              className="campaignImage m-0"
+            />
+
+            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
             </div>
           </div>
         </Masonry>
@@ -147,7 +211,7 @@ const MyCampaigns = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form id="addNewCampaignForm" action="" className="needs-validation" onSubmit="">
+          <form id="addNewCampaignForm" action="" className="needs-validation" onSubmit={addNewCampaign}>
             <div className="mb-2 col-12  ">
               <label htmlFor="newCampaignTitle" className="form-label">
                 Campaign Title <span>*</span>
@@ -176,10 +240,10 @@ const MyCampaigns = () => {
                   setShowAddNewCampaignModal(false);
                 }}
               >
-                Close
+                Cancel
               </button>
               <button type="submit" className="btn btn-primary">
-                Add Agenda
+                Create Campaign
               </button>
             </div>
           </form>

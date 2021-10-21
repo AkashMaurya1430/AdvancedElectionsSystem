@@ -27,6 +27,7 @@ img {
   --green: #4db64c;
   --white: #fff;
   --greyText: #7e818d;
+  --borderColor: #c0c3cc;
 }
 
 input::-webkit-outer-spin-button,
@@ -41,6 +42,7 @@ textarea {
 
 .form-label {
   font-weight: 500;
+  color: var(--greyText);
 }
 
 main {

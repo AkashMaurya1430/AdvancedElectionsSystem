@@ -1,0 +1,56 @@
+.basicInfoContainer,
+.socialProfileContainer,
+.agendasContainer {
+  padding: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 20px;
+}
+
+.basicInfoContainer h5,
+.socialProfileContainer h5,
+.agendasContainer h5 {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.profileImage {
+  width: 10rem;
+  border-radius: 50%;
+}
+
+.form-label {
+  margin-bottom: 0.25rem !important;
+  font-size: 0.9rem;
+}
+
+.agenda {
+  border-radius: 10px;
+}
+
+.agenda:hover {
+  background-color: #f1f1f1;
+}
+
+.agendasContainer .agendaTitle {
+  color: var(--blue);
+  font-size: 1.05rem;
+}
+
+.agendasContainer .agendaDesc {
+  color: var(--greyText);
+  font-size: 0.9rem;
+}
+
+.profileSaveButton {
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 20px !important;
+  color: var(--white);
+  background-color: var(--orange);
+  padding: 0.5rem 3rem !important;
+}
+
+.profileSaveButton:hover {
+  background-color: var(--darkOrange);
+  color: var(--white);
+}

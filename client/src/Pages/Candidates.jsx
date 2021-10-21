@@ -1,5 +1,5 @@
 import React from "react";
-import Candidate from "../../Components/Candidate/Candidate";
+import Candidate from "../Components/Candidate/Candidate";
 
 const CandidatesPage = () => {
   return (
