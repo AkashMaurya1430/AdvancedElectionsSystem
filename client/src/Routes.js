@@ -1,4 +1,4 @@
-export const login = "/login";
+export const login = "/";
 
 export const candidates = "/candidates";
 export const eachCandidate = "/candidate";

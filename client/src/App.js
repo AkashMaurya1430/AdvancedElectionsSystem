@@ -14,26 +14,31 @@ import MyCampaigns from "./Pages/Candidate/MyCampaigns/MyCampaigns.jsx";
 import "./App.css";
 import EachCampaign from "./Pages/EachCampaign/EachCampaign.jsx";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <>
+      <ToastContainer />
       <Router>
-        <Sidebar />
         <Switch>
           <Route exact path={Routes.login} component={Login} />
 
           {/* Voter Routes */}
-
           <Route exact path={Routes.voterEditProfile}>
+            <Sidebar />
             <VoterEditProfile />
           </Route>
 
           <Route exact path={Routes.slotBooking}>
+            <Sidebar />
             <SlotBooking />
           </Route>
 
           {/* Candidate Routes */}
           <Route exact path={Routes.candidateEditProfile}>
+            <Sidebar />
             <CandidateEditProfile />
           </Route>
           <Route exact path={Routes.myCampaigns}>

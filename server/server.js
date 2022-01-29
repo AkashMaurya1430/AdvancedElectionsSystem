@@ -1,6 +1,18 @@
 const express = require("express");
 const app = express();
+const initDB = require("./config/initDb");
+const initMiddlewares = require("./middlewares/index");
+const initRoutes = require("./routes/index");
 
-app.listen(9000, () => {
-  console.log("Server is running on port 3000");
+// Initializing DB
+initDB();
+
+// Initializing Middlewares
+initMiddlewares(app);
+
+// Initializing Routes
+initRoutes(app);
+
+app.listen(5000, () => {
+  console.log("Server is running on port 5000");
 });
