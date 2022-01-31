@@ -1,0 +1,25 @@
+.adminDashboard .cardBody{
+    background-color:rgb(156, 164, 172);
+}
+.adminDashboard .card-stats{
+    display: flex;
+}
+.adminDashboard .card-style{
+    margin-right: 20px;
+}
+.adminDashboard .total-count{
+    font-weight: 700;
+    font-size: 25px;
+    margin-top: 7px;
+}
+.adminDashboard .accordion{
+    margin-top: 50px;
+}
+.adminDashboard .accordion-button{
+    font-size: 18px;
+    color: #2c2c7c;
+    font-weight: 500;
+}
+.adminDashboard .accordion-item{
+    width: 80%;
+}
