@@ -1,5 +1,5 @@
 {
-  "name": "y",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -10,17 +10,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/varuns1007/scam-server-2.0.git"
+    "type": "git"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/varuns1007/scam-server-2.0/issues"
-  },
-  "homepage": "https://github.com/varuns1007/scam-server-2.0#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "concurrently": "^6.2.1",
-    "express": "^4.17.1"
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.1.7",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "nodemailer": "^6.7.2",
+    "nodemon": "^2.0.13"
   }
 }

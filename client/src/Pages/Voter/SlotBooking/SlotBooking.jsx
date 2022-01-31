@@ -2,6 +2,7 @@ import React from "react";
 import "./SlotBooking.css";
 
 const SlotBooking = () => {
+  const slots = [{}];
   return (
     <>
       <main className="slotBookingPage">
@@ -10,7 +11,8 @@ const SlotBooking = () => {
 
         <div className="slots mt-3 mt-md-5 mx-md-5">
           <div className="slot">
-            <div className="slotCount mb-4 d-flex align-items-center h6">
+            <i class="bx bx-check"></i>
+            <div className="slotCount mb-4  h6">
               <i class="bx bxs-user me-2"></i> <span>30 left</span>
             </div>
             <h5>9:30 AM</h5>
@@ -18,7 +20,8 @@ const SlotBooking = () => {
             <h5>10:00 AM</h5>
           </div>
           <div className="slot">
-            <div className="slotCount mb-4 d-flex align-items-center h6">
+            <i class="bx bx-check"></i>
+            <div className="slotCount mb-4  h6">
               <i class="bx bxs-user me-2"></i> <span>30 left</span>
             </div>
             <h5>9:30 AM</h5>
@@ -26,7 +29,8 @@ const SlotBooking = () => {
             <h5>10:00 AM</h5>
           </div>
           <div className="slot">
-            <div className="slotCount mb-4 d-flex align-items-center h6">
+            <i class="bx bx-check"></i>
+            <div className="slotCount mb-4  h6">
               <i class="bx bxs-user me-2"></i> <span>30 left</span>
             </div>
             <h5>9:30 AM</h5>
@@ -34,7 +38,8 @@ const SlotBooking = () => {
             <h5>10:00 AM</h5>
           </div>
           <div className="slot">
-            <div className="slotCount mb-4 d-flex align-items-center h6">
+            <i class="bx bx-check"></i>
+            <div className="slotCount mb-4  h6">
               <i class="bx bxs-user me-2"></i> <span>30 left</span>
             </div>
             <h5>9:30 AM</h5>
@@ -42,7 +47,8 @@ const SlotBooking = () => {
             <h5>10:00 AM</h5>
           </div>
           <div className="slot">
-            <div className="slotCount mb-4 d-flex align-items-center h6">
+            <i class="bx bx-check"></i>
+            <div className="slotCount mb-4  h6">
               <i class="bx bxs-user me-2"></i> <span>30 left</span>
             </div>
             <h5>9:30 AM</h5>
@@ -51,7 +57,7 @@ const SlotBooking = () => {
           </div>
         </div>
 
-        <div className="text-center mt-3 mt-md-5">
+        <div className="text-center mt-5">
           <button className="btn bookSlotBtn">Book This Slot</button>
         </div>
       </main>

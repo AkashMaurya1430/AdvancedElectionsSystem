@@ -11,6 +11,37 @@
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+  transition: 0.4s;
+}
+
+.slotCount {
+  display: flex;
+  align-items: center;
+}
+
+.slot .bx-check {
+  display: none;
+  font-size: 4rem;
+  color: var(--white);
+}
+
+.selectedSlot h5,
+.selectedSlot p,
+.selectedSlot .slotCount,
+.slot:hover h5,
+.slot:hover p,
+.slot:hover .slotCount {
+  display: none;
+}
+
+.slot:hover,
+.selectedSlot {
+  background-color: var(--green);
+}
+
+.selectedSlot .bx-check,
+.slot:hover .bx-check {
+  display: block;
 }
 
 .bookSlotBtn {
