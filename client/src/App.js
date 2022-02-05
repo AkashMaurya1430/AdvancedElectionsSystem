@@ -13,6 +13,8 @@ import Campaigns from "./Pages/Campaigns/Campaigns.jsx";
 import MyCampaigns from "./Pages/Candidate/MyCampaigns/MyCampaigns.jsx";
 import "./App.css";
 import EachCampaign from "./Pages/EachCampaign/EachCampaign.jsx";
+import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard.jsx";
+import VotingResult from "./Pages/VotingResult/VotingResult.jsx";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -43,6 +45,15 @@ function App() {
           </Route>
           <Route exact path={Routes.myCampaigns}>
             <MyCampaigns />
+          </Route>
+
+          {/* Admin Routes */}
+          <Route exact path={Routes.adminDashboard}>
+            <AdminDashboard />
+          </Route>
+
+          <Route exact path={Routes.votingResult}>
+            <VotingResult />
           </Route>
 
           {/* Common Routes  */}
