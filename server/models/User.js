@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema(
       required: true,
     },
     role: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       // required: true,
       refPath: "roleModel",
     },

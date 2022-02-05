@@ -7,7 +7,7 @@ const cors = require('cors')
 
 const initMiddleware = (app) => {
   app.use(express.json({ limit: "2mb" }));
-  app.use(express.urlencoded({ extended: false, limit: "2mb" }));
+  app.use(express.urlencoded({ extended: false, limit: "1mb" }));
   app.use(express.static(path.join(__dirname, "../public")));
   app.use(logger("dev"));
   app.use(cors())

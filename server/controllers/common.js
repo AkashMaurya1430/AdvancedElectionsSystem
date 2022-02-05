@@ -3,6 +3,7 @@ const Candidate = require("../models/Candidate");
 const Voter = require("../models/Voter");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+var jwt = require("jsonwebtoken");
 
 module.exports.signup = async (req, res) => {
   let response = {
@@ -44,7 +45,6 @@ module.exports.signup = async (req, res) => {
         });
 
         // console.log(user);
-
         const userData = await user.save();
 
         let roleId;
@@ -68,11 +68,16 @@ module.exports.signup = async (req, res) => {
 
         await User.findOneAndUpdate({ _id: userData._id }, { role: roleId })
           .then((result) => {
+            var token = jwt.sign({ userId: result._id, email: result.email, roleModel: result.roleModel, role: roleId }, process.env.JWT_SECRET);
+            response.data = {
+              token,
+            };
             response.status = true;
             response.message = "User Signed up successfully";
             res.status(201).send(response);
           })
           .catch((error) => {
+            response.errMessage = error;
             response.message = "Failed to sign up";
             res.status(20).send(response);
           });
@@ -106,6 +111,11 @@ module.exports.login = async (req, res) => {
       if (user) {
         if (bcrypt.compareSync(password, user.password)) {
           response.status = true;
+          var token = jwt.sign({ userId: user._id, email: user.email, roleModel: user.roleModel, role: user.role }, process.env.JWT_SECRET);
+          response.data = {
+            role: user.roleModel,
+            token,
+          };
           response.message = "User logged in";
           return res.status(200).send(response);
         } else {
