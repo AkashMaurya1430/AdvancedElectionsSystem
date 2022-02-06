@@ -1,8 +1,8 @@
 const { sign, verify } = require("jsonwebtoken");
 
-module.exports.isAuth = (req,res,next)=>{
-    const authorization = req.header("Authorization");
-    let user = {};
+module.exports.isAuth = (req, res, next) => {
+  const authorization = req.header("Authorization");
+  let user = {};
   let response = { success: false, message: "" };
   let secret = process.env.JWT_SECRET;
 
@@ -10,7 +10,7 @@ module.exports.isAuth = (req,res,next)=>{
     response.message = "Not authorized";
     return res.status(401).send(response);
   }
-
+  // console.log(authorization,"Au");
 
   try {
     const token = authorization.split(" ")[1];
@@ -25,14 +25,14 @@ module.exports.isAuth = (req,res,next)=>{
     return res.status(401).send(response);
   }
   return next();
-}
+};
 
 module.exports.checkRole = (roles) => {
-    return (req, res, next) => {
-        console.log(req.user,"User");
-      let response = { success: false, message: "" };
-      if (roles.includes(req.user.roleModel)) return next();
-      response.message = "Oops , you cannot access this page";
-      return res.status(401).send(response);
-    };
+  return (req, res, next) => {
+    // console.log(req.user, "User");
+    let response = { success: false, message: "" };
+    if (roles.includes(req.user.roleModel)) return next();
+    response.message = "Oops , you cannot access this page";
+    return res.status(401).send(response);
   };
+};

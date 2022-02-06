@@ -17,6 +17,30 @@ const Profile = () => {
   const [imgUrl, setImageUrl] = React.useState("https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg");
   const imgInput = React.useRef();
 
+  React.useEffect(() => {
+    async function fetchData() {
+      await axiosJWT
+        .get("/voter/myDetails")
+        .then((response) => {
+          console.log(response);
+          if (response.status) {
+            setFormData({
+              name: response.data.data.role.name,
+              contact: response.data.data.role.contact,
+              dob: new Date(response.data.data.role.dob).toISOString().substr(0, 10),
+              email: response.data.data.email,
+            });
+            setImageUrl(response.data.data.role.profilePic);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error("Failed to fetch info");
+        });
+    }
+    fetchData();
+  }, []);
+
   const handleFileInput = (e) => {
     console.log(e);
     if (e.target.files.length > 0) {
@@ -32,11 +56,15 @@ const Profile = () => {
     }
 
     let form = new FormData();
-    form.append("profilePic", formData.profilePic);
     form.append("name", formData.name);
     form.append("contact", formData.contact);
     form.append("dob", formData.dob);
     // form.append("about", formData.about);
+    if (formData.profilePic) {
+      form.append("profilePic", formData.profilePic);
+    } else {
+      form.append("profilePic", imgUrl);
+    }
 
     try {
       await axiosJWT
@@ -99,7 +127,7 @@ const Profile = () => {
                 type="text"
                 className="form-control"
                 id="fullName"
-                placeholder=""
+                placeholder="Full Name"
                 name="name"
                 onChange={(e) => {
                   setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -131,7 +159,7 @@ const Profile = () => {
               <label htmlFor="emailID" className="form-label">
                 Email ID <span>*</span>
               </label>
-              <input type="email" className="form-control" id="emailID" placeholder="" disabled />
+              <input type="email" className="form-control" id="emailID" placeholder="" value={formData ? formData.email : ""} disabled />
             </div>
 
             {/* DOB  */}
