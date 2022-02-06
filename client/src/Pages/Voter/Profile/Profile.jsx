@@ -14,7 +14,7 @@ const Profile = () => {
     dob: "",
     // about: "",
   });
-  const [imgUrl, setImageUrl] = React.useState("https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg");
+  const [imgUrl, setImageUrl] = React.useState();
   const imgInput = React.useRef();
 
   React.useEffect(() => {
@@ -25,12 +25,16 @@ const Profile = () => {
           console.log(response);
           if (response.status) {
             setFormData({
-              name: response.data.data.role.name,
-              contact: response.data.data.role.contact,
-              dob: new Date(response.data.data.role.dob).toISOString().substr(0, 10),
+              name: response.data.data.role.name ? response.data.data.role.name : "",
+              contact: response.data.data.role.contact ? response.data.data.role.contact : "",
+              dob: response.data.data.role.dob ? new Date(response.data.data.role.dob).toISOString().substr(0, 10) : "",
               email: response.data.data.email,
             });
-            setImageUrl(response.data.data.role.profilePic);
+            setImageUrl(
+              response.data.data.role.profilePic
+                ? response.data.data.role.profilePic
+                : "https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg"
+            );
           }
         })
         .catch((e) => {

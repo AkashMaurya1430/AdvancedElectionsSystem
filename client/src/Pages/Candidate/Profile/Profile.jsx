@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import "./Profile.css";
+import { baseURL } from "../../../Constants";
+import axiosJWT from "../../../Helpers/axios";
+import { toast } from "react-toastify";
+let FormData = require("form-data");
 
 const Profile = () => {
   const agenda = [
@@ -23,8 +27,32 @@ const Profile = () => {
   const [agendas, setAgendas] = useState(agenda);
   const [showAgendaModal, setShowAgendaModal] = useState(false);
 
-  const [imgUrl, setImageUrl] = React.useState("https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg");
+  const [imgUrl, setImageUrl] = React.useState();
   const imgInput = React.useRef();
+
+  React.useEffect(() => {
+    async function fetchData() {
+      await axiosJWT
+        .get("/candidate/myDetails")
+        .then((response) => {
+          console.log(response);
+          if (response.status) {
+            setFormData({
+              name: response.data.data.role.name ? response.data.data.role.name : "",
+              contact: response.data.data.role.contact ? response.data.data.role.contact : "",
+              dob: response.data.data.role.dob ? new Date(response.data.data.role.dob).toISOString().substr(0, 10) : "",
+              email: response.data.data ? response.data.data.email : "",
+            });
+            setImageUrl(response.data.data.role.profilePic ? response.data.data.role.profilePic : "https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error("Failed to fetch info");
+        });
+    }
+    fetchData();
+  }, []);
 
   const handleFileInput = (e) => {
     console.log(e);
