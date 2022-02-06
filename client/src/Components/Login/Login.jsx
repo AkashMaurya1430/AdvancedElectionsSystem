@@ -64,7 +64,7 @@ const Login = () => {
             </div>
           </div>
           <div className="content">
-            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</h1>
+            <h1>SIES Graduate School of Technology</h1>
             <ul className="mt-4">
               <li>Enroll To Vote</li>
               <li>Enroll To Vote</li>
