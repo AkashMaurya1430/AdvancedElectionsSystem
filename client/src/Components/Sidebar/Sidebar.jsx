@@ -43,7 +43,9 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <NavLink className="nav__link flex-row align-items-center" activeClassName="nav__link-active" to="/slots">
+          <NavLink className="nav__link flex-row align-items-center" activeClassName="nav__link-active" to="/" onClick={()=>{
+            localStorage.clear()
+          }}>
             <i className="bx bx-log-out nav__icon mb-0 me-2"></i>
             <span className="nav__name">Log Out</span>
           </NavLink>

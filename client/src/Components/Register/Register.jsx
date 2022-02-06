@@ -2,9 +2,13 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { baseURL } from "../../Constants";
 import {toast} from 'react-toastify'
+import { useHistory } from "react-router";
+import * as Routes from "../../Routes";
+
 const axios = require("axios");
 
 const Register = ({ show, handleModal }) => {
+  const history = useHistory()
   const [formData, setFormData] = React.useState({ type: "Voter" });
 
   const handleSubmit = (event) => {
@@ -27,6 +31,11 @@ const Register = ({ show, handleModal }) => {
           if(response.data.status){
             toast.success(response.data.message)
             handleModal();
+            if(formData.type === "Voter"){
+              history.push(Routes.voterEditProfile)
+            } else if(formData.type === "Candidate"){
+              history.push(Routes.candidateEditProfile)
+            }
           } else{
             toast.error(response.data.message)
           }

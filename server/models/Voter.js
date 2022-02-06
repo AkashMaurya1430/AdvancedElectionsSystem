@@ -19,9 +19,9 @@ const voterSchema = mongoose.Schema(
     dob: {
       type: Date,
     },
-    highestEdu: {
-      type: String,
-    },
+    // highestEdu: {
+    //   type: String,
+    // },
     about: {
       type: String,
     },

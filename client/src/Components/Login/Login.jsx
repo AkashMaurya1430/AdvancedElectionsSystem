@@ -5,9 +5,12 @@ import Logo from "../Images/logo.png";
 import { baseURL } from "../../Constants";
 import { toast } from "react-toastify";
 import "./Login.css";
+import { useHistory } from "react-router";
+import * as Routes from "../../Routes";
 const axios = require("axios");
 
 const Login = () => {
+  const history = useHistory();
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [formData, setFormData] = React.useState();
 
@@ -25,13 +28,18 @@ const Login = () => {
       event.stopPropagation();
       return;
     } else {
-
       axios
         .post(`${baseURL}/login`, formData)
         .then((response) => {
           console.log(response);
           if (response.data.status) {
+            window.localStorage.setItem("profile", JSON.stringify(response.data.data));
             toast.success(response.data.message);
+            if (response.data.data.role === "Voter") {
+              history.push(Routes.voterEditProfile);
+            } else if (response.data.data.role === "Candidate") {
+              history.push(Routes.candidateEditProfile);
+            }
           } else {
             toast.error(response.data.message);
           }
@@ -98,20 +106,23 @@ const Login = () => {
                 required
               />
               <div class="invalid-feedback">Please enter email</div>
-
             </div>
 
             <div class="mb-4">
               <label for="loginPassword" class="form-label">
                 Password
               </label>
-              <input type="password" class="form-control" id="loginPassword"
-              name="password"
-              onChange={(e) => {
-                setFormData({ ...formData, [e.target.name]: e.target.value });
-              }}
-              value={formData ? formData.password : ""}
-              required />
+              <input
+                type="password"
+                class="form-control"
+                id="loginPassword"
+                name="password"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
+                }}
+                value={formData ? formData.password : ""}
+                required
+              />
               <div class="invalid-feedback mb-2">Please enter password</div>
 
               <Link>Forgot Password?</Link>

@@ -13,8 +13,26 @@ const Profile = () => {
       desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat dolores eum tempore numquam et cum,",
     },
   ];
+  const [formData, setFormData] = React.useState({
+    profilePic: "",
+    name: "",
+    contact: "",
+    dob: "",
+    // about: "",
+  });
   const [agendas, setAgendas] = useState(agenda);
   const [showAgendaModal, setShowAgendaModal] = useState(false);
+
+  const [imgUrl, setImageUrl] = React.useState("https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg");
+  const imgInput = React.useRef();
+
+  const handleFileInput = (e) => {
+    console.log(e);
+    if (e.target.files.length > 0) {
+      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    }
+    setImageUrl(URL.createObjectURL(e.target.files[0]));
+  };
 
   function addNewAgenda(event) {
     let agendaTitle = document.getElementById("newAgendaTitle").value;
@@ -47,7 +65,26 @@ const Profile = () => {
         <div className="basicInfoContainer mt-4">
           <h5>Basic Info</h5>
           <div className="row mx-0 mt-4 justify-content-center">
-            <img src="https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg" alt="" className="profileImage" />
+            <div className="mx-auto w-auto position-relative">
+              <img src={imgUrl} alt="" className="profileImage" />
+              <input
+                type="file"
+                className="profileImageInput"
+                ref={imgInput}
+                accept="image/*"
+                name="profilePic"
+                onChange={(e) => {
+                  handleFileInput(e);
+                }}
+              />
+
+              <i
+                class="bx bxs-pencil editProfilePic"
+                onClick={() => {
+                  imgInput.current.click();
+                }}
+              ></i>
+            </div>{" "}
           </div>
 
           <div className="row mt-3">
@@ -56,7 +93,17 @@ const Profile = () => {
               <label htmlFor="fullName" className="form-label">
                 Full Name <span>*</span>
               </label>
-              <input type="text" className="form-control" id="fullName" placeholder="" />
+              <input
+                type="text"
+                className="form-control"
+                id="fullName"
+                placeholder="Full Name"
+                name="name"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
+                }}
+                value={formData ? formData.name : ""}
+              />
             </div>
 
             {/* Contact  */}
@@ -64,7 +111,17 @@ const Profile = () => {
               <label htmlFor="contactNumber" className="form-label">
                 Contact Number <span>*</span>
               </label>
-              <input type="number" className="form-control" id="contactNumber" placeholder="" />
+              <input
+                type="number"
+                className="form-control"
+                id="contactNumber"
+                placeholder="Contact"
+                name="contact"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
+                }}
+                value={formData ? formData.contact : ""}
+              />
             </div>
 
             {/* Email ID  */}
@@ -72,7 +129,7 @@ const Profile = () => {
               <label htmlFor="emailID" className="form-label">
                 Email ID <span>*</span>
               </label>
-              <input type="email" className="form-control" id="emailID" placeholder="" />
+              <input type="email" className="form-control" id="emailID" placeholder="" value={formData ? formData.email : ""} />
             </div>
 
             {/* DOB  */}
@@ -80,7 +137,17 @@ const Profile = () => {
               <label htmlFor="dob" className="form-label">
                 DOB <span>*</span>
               </label>
-              <input type="date" className="form-control" id="dob" placeholder="" />
+              <input
+                type="date"
+                className="form-control"
+                id="dob"
+                placeholder=""
+                name="dob"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
+                }}
+                value={formData ? formData.dob : ""}
+              />
             </div>
 
             {/* Highest Education  */}
@@ -88,7 +155,17 @@ const Profile = () => {
               <label htmlFor="highestEducation" className="form-label">
                 Highest Education <span>*</span>
               </label>
-              <input type="text" className="form-control" id="highestEducation" placeholder="" />
+              <input
+                type="text"
+                className="form-control"
+                id="highestEducation"
+                placeholder=""
+                name="highestEducation"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
+                }}
+                value={formData ? formData.highestEducation : ""}
+              />
             </div>
 
             {/* About  */}
@@ -96,7 +173,15 @@ const Profile = () => {
               <label htmlFor="about" className="form-label">
                 About <span>*</span>
               </label>
-              <textarea name="" id="about" className="form-control"></textarea>
+              <textarea
+                id="about"
+                className="form-control"
+                name="about"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
+                }}
+                value={formData ? formData.about : ""}
+              ></textarea>
             </div>
           </div>
         </div>
@@ -109,7 +194,17 @@ const Profile = () => {
               <label htmlFor="twitterLink" className="form-label">
                 Twitter
               </label>
-              <input type="url" className="form-control" id="twitterLink" placeholder="Twitter profile " />
+              <input
+                type="url"
+                className="form-control"
+                id="twitterLink"
+                placeholder="Twitter profile "
+                name="twitter"
+                onChange={(e) => {
+                  // setFormData({ ...formData, [socials][e.target.name]: e.target.value });
+                }}
+                // value={formData ? formData.socials.twitter : ""}
+              />
             </div>
 
             {/* Instagram  */}
@@ -117,7 +212,17 @@ const Profile = () => {
               <label htmlFor="instagramLink" className="form-label">
                 Instagram
               </label>
-              <input type="url" className="form-control" id="instagramLink" placeholder="instagram profile " />
+              <input
+                type="url"
+                className="form-control"
+                id="instagramLink"
+                placeholder="instagram profile "
+                name="instagram"
+                onChange={(e) => {
+                  // setFormData({ ...formData, [socials][e.target.name]: e.target.value });
+                }}
+                // value={formData ? formData.socials.instagram : ""}
+              />
             </div>
 
             {/* Facebook  */}
@@ -125,7 +230,17 @@ const Profile = () => {
               <label htmlFor="facebookLink" className="form-label">
                 Facebook
               </label>
-              <input type="url" className="form-control" id="facebookLink" placeholder="Facebook profile " />
+              <input
+                type="url"
+                className="form-control"
+                id="facebookLink"
+                placeholder="Facebook profile "
+                name="facebook"
+                onChange={(e) => {
+                  // setFormData({ ...formData, [socials][e.target.name]: e.target.value });
+                }}
+                // value={formData ? formData.socials.facebook : ""}
+              />
             </div>
           </div>
         </div>
