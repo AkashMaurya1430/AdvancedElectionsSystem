@@ -6,6 +6,8 @@ import "./MyCampaigns.css";
 const MyCampaigns = () => {
   const [showAddNewCampaignModal, setShowAddNewCampaignModal] = useState(false);
 
+  const [createCampaignFormData, setCreateCampaignFormData] = useState();
+
   const breakpointColumnsObj = {
     default: 4,
     992: 3,
@@ -14,7 +16,6 @@ const MyCampaigns = () => {
 
   function addNewCampaign(event) {
     event.preventDefault();
-
     var form = document.getElementById("addNewCampaignForm");
     form.classList.add("was-validated");
 
@@ -23,6 +24,7 @@ const MyCampaigns = () => {
       event.stopPropagation();
     } else {
       setShowAddNewCampaignModal(false);
+      console.log(createCampaignFormData);
     }
   }
   return (
@@ -42,7 +44,11 @@ const MyCampaigns = () => {
           </button>
         </div>
 
-        <Masonry breakpointCols={breakpointColumnsObj} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
           <div className="campaign">
             <img
               src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
@@ -50,7 +56,9 @@ const MyCampaigns = () => {
               className="campaignImage m-0"
             />
 
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
 
             <div className="campaignFooter mt-1 d-flex justify-content-between">
               <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
@@ -72,7 +80,9 @@ const MyCampaigns = () => {
               className="campaignImage m-0"
             />
 
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
 
             <div className="campaignFooter mt-1 d-flex justify-content-between">
               <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
@@ -93,7 +103,9 @@ const MyCampaigns = () => {
               className="campaignImage m-0"
             />
 
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
 
             <div className="campaignFooter mt-1 d-flex justify-content-between">
               <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
@@ -108,58 +120,9 @@ const MyCampaigns = () => {
             </div>
           </div>
           <div className="campaign">
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <img
-              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
-              alt=""
-              className="campaignImage m-0"
-            />
-
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
 
             <div className="campaignFooter mt-1 d-flex justify-content-between">
               <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
@@ -180,7 +143,66 @@ const MyCampaigns = () => {
               className="campaignImage m-0"
             />
 
-            <h6 className="campaignTitle mt-2">Lorem ipsum dolor sit amet consectetur.</h6>
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
+
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div className="campaign">
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
+
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div className="campaign">
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
+
+            <div className="campaignFooter mt-1 d-flex justify-content-between">
+              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
+              <span>
+                <i
+                  className="bx bx-trash text-danger fs-6 cursor-pointer"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Delete Campaign"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div className="campaign">
+            <img
+              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
+              alt=""
+              className="campaignImage m-0"
+            />
+
+            <h6 className="campaignTitle mt-2">
+              Lorem ipsum dolor sit amet consectetur.
+            </h6>
 
             <div className="campaignFooter mt-1 d-flex justify-content-between">
               <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
@@ -211,19 +233,50 @@ const MyCampaigns = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form id="addNewCampaignForm" action="" className="needs-validation" onSubmit={addNewCampaign}>
+          <form
+            id="addNewCampaignForm"
+            action=""
+            className="needs-validation"
+            onSubmit={addNewCampaign}
+          >
             <div className="mb-2 col-12  ">
               <label htmlFor="newCampaignTitle" className="form-label">
                 Campaign Title <span>*</span>
               </label>
-              <input type="text" className="form-control" id="newCampaignTitle" placeholder="Title" required />
+              <input
+                type="text"
+                className="form-control"
+                id="newCampaignTitle"
+                placeholder="Title"
+                name="title"
+                onChange={(e) => {
+                  setCreateCampaignFormData({
+                    ...createCampaignFormData,
+                    [e.target.name]: e.target.value,
+                  });
+                }}
+                value={
+                  createCampaignFormData ? createCampaignFormData.title : ""
+                }
+                required
+              />
             </div>
 
             <div className="mb-2 col-12  ">
               <label htmlFor="newCampaignDesc" className="form-label">
                 Campaign Body <span>*</span>
               </label>
-              <textarea name="" id="newCampaignDesc" className="form-control" placeholder="Write a few words about your campaign" required></textarea>
+              <textarea
+                id="newCampaignDesc"
+                className="form-control"
+                placeholder="Write a few words about your campaign"
+                name="body"
+                onChange={(e) => {
+                  setCreateCampaignFormData({ ...createCampaignFormData, [e.target.name]: e.target.value });
+                }}
+                value={createCampaignFormData ? createCampaignFormData.body : ""}
+                required
+              ></textarea>
             </div>
 
             <div className="mb-3 col-12  ">
@@ -231,7 +284,17 @@ const MyCampaigns = () => {
                 Campaign Image
               </label>
 
-              <input class="form-control" type="file" id="newCampaignImage" accept="image/*" />
+              <input
+                class="form-control"
+                type="file"
+                id="newCampaignImage"
+                accept="image/*"
+                name="image"
+                onChange={(e) => {
+                  setCreateCampaignFormData({ ...createCampaignFormData, [e.target.name]: e.target.value });
+                }}
+                value={createCampaignFormData ? createCampaignFormData.image : ""}
+              />
             </div>
             <div className="col-12 text-end">
               <button
@@ -242,7 +305,8 @@ const MyCampaigns = () => {
               >
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary"
+              >
                 Create Campaign
               </button>
             </div>
