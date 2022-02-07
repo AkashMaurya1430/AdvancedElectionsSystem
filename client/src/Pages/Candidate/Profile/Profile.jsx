@@ -2,29 +2,21 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import "./Profile.css";
 import { baseURL } from "../../../Constants";
-import axiosJWT from "../../../Helpers/axios";
+import { getAxios } from "../../../Helpers/axios";
 import { toast } from "react-toastify";
 let FormData = require("form-data");
 
 const Profile = () => {
-  const agenda = [
-    {
-      title: "Lorem ipsum dolor sit amet.",
-      desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat dolores eum tempore numquam et cum,",
-    },
-    {
-      title: "Lorem ipsum dolor sit amet.",
-      desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat dolores eum tempore numquam et cum,",
-    },
-  ];
+  
   const [formData, setFormData] = React.useState({
     profilePic: "",
     name: "",
     contact: "",
     dob: "",
-    // about: "",
+    about: "",
+    highestEducation: "",
   });
-  const [agendas, setAgendas] = useState(agenda);
+  const [agendas, setAgendas] = useState();
   const [showAgendaModal, setShowAgendaModal] = useState(false);
 
   const [imgUrl, setImageUrl] = React.useState();
@@ -32,6 +24,7 @@ const Profile = () => {
 
   React.useEffect(() => {
     async function fetchData() {
+      let axiosJWT = getAxios();
       await axiosJWT
         .get("/candidate/myDetails")
         .then((response) => {
@@ -40,10 +33,21 @@ const Profile = () => {
             setFormData({
               name: response.data.data.role.name ? response.data.data.role.name : "",
               contact: response.data.data.role.contact ? response.data.data.role.contact : "",
+              about: response.data.data.role.about ? response.data.data.role.about : "",
+              highestEducation: response.data.data.role.highestEducation ? response.data.data.role.highestEducation : "",
               dob: response.data.data.role.dob ? new Date(response.data.data.role.dob).toISOString().substr(0, 10) : "",
               email: response.data.data ? response.data.data.email : "",
+              twitter: response.data.data.role.socials && response.data.data.role.socials.twitter ? response.data.data.role.socials.twitter : "",
+              instagram:
+                response.data.data.role.socials && response.data.data.role.socials.instagram ? response.data.data.role.socials.instagram : "",
+              facebook: response.data.data.role.socials && response.data.data.role.socials.facebook ? response.data.data.role.socials.facebook : "",
             });
-            setImageUrl(response.data.data.role.profilePic ? response.data.data.role.profilePic : "https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg");
+            setAgendas(response.data.data.role.electionAgendas)
+            setImageUrl(
+              response.data.data.role.profilePic
+                ? response.data.data.role.profilePic
+                : "https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg"
+            );
           }
         })
         .catch((e) => {
@@ -76,13 +80,70 @@ const Profile = () => {
     } else {
       let newAgenda = {
         title: agendaTitle,
-        desc: agendaDesc,
+        description: agendaDesc,
       };
       setAgendas((agendas) => [...agendas, newAgenda]);
       console.log(agendas);
       setShowAgendaModal(false);
     }
   }
+
+  const deleteAgenda = (indexToremove) => {
+    setAgendas(agendas.filter((_, index) => index !== indexToremove));
+  };
+
+  const submitProfileData = async () => {
+    if (formData.name === "" || formData.contact === "" || formData.about === "" || formData.highestEducation === "" || formData.dob === "") {
+      return toast.warn("Please fill basic info.");
+    }
+
+    let form = new FormData();
+    form.append("name", formData.name);
+    form.append("contact", formData.contact);
+    form.append("dob", formData.dob);
+    form.append("about", formData.about);
+    form.append("highestEducation", formData.highestEducation);
+    if (formData.profilePic) {
+      form.append("profilePic", formData.profilePic);
+    } else {
+      form.append("profilePic", imgUrl);
+    }
+    console.log(formData.twitter);
+    if (formData.twitter) {
+      form.append("twitter", formData.twitter);
+    }
+    if (formData.instagram) {
+      form.append("instagram", formData.instagram);
+    }
+    if (formData.facebook) {
+      form.append("facebook", formData.facebook);
+    }
+
+    if (agendas.length) {
+      form.append("agendas", JSON.stringify(agendas));
+    }
+
+    try {
+      let axiosJWT = getAxios();
+      await axiosJWT
+        .post(`/candidate/editProfile`, form)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status) {
+            toast.success(response.data.message);
+          } else {
+            toast.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+          toast.error(error.response.data.message);
+        });
+    } catch (e) {
+      console.log(e);
+      toast.error("Faild to update, please try again");
+    }
+  };
 
   return (
     <>
@@ -104,6 +165,7 @@ const Profile = () => {
                 onChange={(e) => {
                   handleFileInput(e);
                 }}
+                required
               />
 
               <i
@@ -131,6 +193,7 @@ const Profile = () => {
                   setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
                 value={formData ? formData.name : ""}
+                required
               />
             </div>
 
@@ -149,6 +212,7 @@ const Profile = () => {
                   setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
                 value={formData ? formData.contact : ""}
+                required
               />
             </div>
 
@@ -157,7 +221,7 @@ const Profile = () => {
               <label htmlFor="emailID" className="form-label">
                 Email ID <span>*</span>
               </label>
-              <input type="email" className="form-control" id="emailID" placeholder="" value={formData ? formData.email : ""} />
+              <input type="email" className="form-control" id="emailID" placeholder="" value={formData ? formData.email : ""} disabled />
             </div>
 
             {/* DOB  */}
@@ -175,6 +239,7 @@ const Profile = () => {
                   setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
                 value={formData ? formData.dob : ""}
+                required
               />
             </div>
 
@@ -193,6 +258,7 @@ const Profile = () => {
                   setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
                 value={formData ? formData.highestEducation : ""}
+                required
               />
             </div>
 
@@ -209,6 +275,7 @@ const Profile = () => {
                   setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
                 value={formData ? formData.about : ""}
+                required
               ></textarea>
             </div>
           </div>
@@ -229,9 +296,9 @@ const Profile = () => {
                 placeholder="Twitter profile "
                 name="twitter"
                 onChange={(e) => {
-                  // setFormData({ ...formData, [socials][e.target.name]: e.target.value });
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
-                // value={formData ? formData.socials.twitter : ""}
+                value={formData ? formData.twitter : ""}
               />
             </div>
 
@@ -247,9 +314,9 @@ const Profile = () => {
                 placeholder="instagram profile "
                 name="instagram"
                 onChange={(e) => {
-                  // setFormData({ ...formData, [socials][e.target.name]: e.target.value });
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
-                // value={formData ? formData.socials.instagram : ""}
+                value={formData ? formData.instagram : ""}
               />
             </div>
 
@@ -265,9 +332,9 @@ const Profile = () => {
                 placeholder="Facebook profile "
                 name="facebook"
                 onChange={(e) => {
-                  // setFormData({ ...formData, [socials][e.target.name]: e.target.value });
+                  setFormData({ ...formData, [e.target.name]: e.target.value });
                 }}
-                // value={formData ? formData.socials.facebook : ""}
+                value={formData ? formData.facebook : ""}
               />
             </div>
           </div>
@@ -292,9 +359,15 @@ const Profile = () => {
                 {agendas.map((agenda, i) => (
                   <div className="agenda mt-3">
                     <h6 className="agendaTitle d-flex justify-content-between align-items-center">
-                      {agenda.title} <i className="bx bx-trash mt-2 text-danger  cursor-pointer"></i>
+                      {agenda.title}{" "}
+                      <i
+                        className="bx bx-trash mt-2 text-danger  cursor-pointer"
+                        onClick={() => {
+                          deleteAgenda(i);
+                        }}
+                      ></i>
                     </h6>
-                    <p className="agendaDesc m-0">{agenda.desc}</p>
+                    <p className="agendaDesc m-0">{agenda.description}</p>
                   </div>
                 ))}
               </div>
@@ -305,7 +378,14 @@ const Profile = () => {
         </div>
 
         <div className="text-center mt-4">
-          <button className="btn profileSaveButton">Save</button>
+          <button
+            className="btn profileSaveButton"
+            onClick={() => {
+              submitProfileData();
+            }}
+          >
+            Save
+          </button>
         </div>
       </main>
 

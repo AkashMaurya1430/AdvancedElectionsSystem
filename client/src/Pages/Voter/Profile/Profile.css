@@ -23,6 +23,8 @@
 .form-label {
   margin-bottom: 0.25rem !important;
   font-size: 0.9rem;
+  font-weight: 600 !important;
+
 }
 
 .agenda {

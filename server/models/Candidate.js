@@ -18,7 +18,7 @@ const candidateSchema = mongoose.Schema({
   dob: {
     type: Date,
   },
-  highestEdu: {
+  highestEducation: {
     type: String,
   },
   about: {
