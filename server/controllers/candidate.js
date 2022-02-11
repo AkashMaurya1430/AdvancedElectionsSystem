@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Candidate = require("../models/Candidate");
 let path = require("path");
 const fs = require("fs");
+const Campaign = require("../models/Campaign");
 
 module.exports.getMyDetails = async (req, res) => {
   let response = { status: false, message: "" };
@@ -30,7 +31,18 @@ module.exports.getMyDetails = async (req, res) => {
 
 module.exports.editProfile = async (req, res) => {
   let response = { status: false, message: "" };
-  let { name, contact, dob, about, profilePic, twitter, instagram, facebook, highestEducation, agendas } = req.body;
+  let {
+    name,
+    contact,
+    dob,
+    about,
+    profilePic,
+    twitter,
+    instagram,
+    facebook,
+    highestEducation,
+    agendas,
+  } = req.body;
 
   if (agendas) {
     agendas = JSON.parse(agendas);
@@ -54,22 +66,28 @@ module.exports.editProfile = async (req, res) => {
   const candidateData = await Candidate.findOne({ _id: req.user.role });
 
   if (req.file && req.file.originalname != "") {
-    updatedCandidate.profilePic = process.env.APP_DEV_URL + "/images/profilePic/" + req.file.filename;
+    updatedCandidate.profilePic =
+      process.env.APP_DEV_URL + "/images/profilePic/" + req.file.filename;
   }
 
-  await Candidate.findOneAndUpdate({ _id: req.user.role }, updatedCandidate, { new: true })
+  await Candidate.findOneAndUpdate({ _id: req.user.role }, updatedCandidate, {
+    new: true,
+  })
     .then((result) => {
       if (result) {
         if (candidateData.profilePic) {
           let imageName = candidateData.profilePic.split("/");
-          let imagepath = path.join(__dirname, "../public/images/profilePic/") + imageName[imageName.length - 1];
+          let imagepath =
+            path.join(__dirname, "../public/images/profilePic/") +
+            imageName[imageName.length - 1];
           // console.log(imagepath, "IMage");
           if (req.file && req.file.originalname != "") {
             fs.unlink(imagepath, (err) => {
               if (err) {
                 response.status = false;
                 response.errMessage = err;
-                response.message = "Failed to update profile , please try again";
+                response.message =
+                  "Failed to update profile , please try again";
                 return res.status(400).json(response);
               }
             });
@@ -91,4 +109,53 @@ module.exports.editProfile = async (req, res) => {
     });
 
   //   console.log(updatedVoter, "U");
+};
+
+module.exports.addCampaign = async (req, res) => {
+  let response = { status: false, message: "" };
+  let { title, body } = req.body;
+
+  // console.log(req.file);
+
+  let newCampaign = new Campaign({
+    title,
+    body,
+    createdBy: req.user.role,
+  });
+
+  if (req.file && req.file.originalname != "") {
+    newCampaign.image =
+      process.env.APP_DEV_URL + "/images/campaigns/" + req.file.filename;
+  }
+
+  await newCampaign.save().then((result) => {
+    if (result) {
+      response.status = true;
+      response.message = "Campaign Added Successfully";
+      res.status(201).send(response);
+    } else {
+      response.message = "Failed to add Campaign";
+      res.status(201).send(response);
+    }
+  });
+};
+
+module.exports.getMyCampaigns = async (req, res) => {
+  let response = { status: false, message: "", data: {} };
+
+  let myCampaigns = await Campaign.find({ createdBy: req.user.role });
+
+  console.log(myCampaigns);
+
+  if (myCampaigns.length) {
+    response.status = true;
+    response.message = "Campaigns Found";
+    response.data.campaigns = myCampaigns;
+    return res.status(200).send(response);
+  } else {
+    response.status = true;
+    response.message = "Campaigns Not Found";
+    response.data.campaigns = myCampaigns;
+    return res.status(200).send(response);
+  }
 };

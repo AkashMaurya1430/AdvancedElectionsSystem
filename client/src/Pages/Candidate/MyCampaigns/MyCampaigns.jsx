@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import Masonry from "react-masonry-css";
 import { Modal } from "react-bootstrap";
+import { getAxios } from "../../../Helpers/axios";
+import { toast } from "react-toastify";
 import "./MyCampaigns.css";
+
+let FormData = require("form-data");
 
 const MyCampaigns = () => {
   const [showAddNewCampaignModal, setShowAddNewCampaignModal] = useState(false);
 
   const [createCampaignFormData, setCreateCampaignFormData] = useState();
+
+  const [myCampaigns, setMyCampaigns] = useState([]);
 
   const breakpointColumnsObj = {
     default: 4,
@@ -14,7 +20,34 @@ const MyCampaigns = () => {
     578: 1,
   };
 
-  function addNewCampaign(event) {
+  React.useEffect(() => {
+    async function getMyCampaigns() {
+      try {
+        let axiosJWT = getAxios();
+        await axiosJWT
+          .get(`/candidate/mycampaigns`)
+          .then((response) => {
+            console.log(response);
+            if (response.data.status) {
+              toast.success(response.data.message);
+              setMyCampaigns(response.data.data.campaigns);
+            } else {
+              toast.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            toast.error(error.response.data.message);
+          });
+      } catch (e) {
+        console.log(e);
+        toast.error("Faild to update, please try again");
+      }
+    }
+    getMyCampaigns();
+  }, []);
+
+  async function addNewCampaign(event) {
     event.preventDefault();
     var form = document.getElementById("addNewCampaignForm");
     form.classList.add("was-validated");
@@ -23,10 +56,47 @@ const MyCampaigns = () => {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      setShowAddNewCampaignModal(false);
-      console.log(createCampaignFormData);
+      let form = new FormData();
+      form.append("title", createCampaignFormData.title);
+      form.append("body", createCampaignFormData.body);
+      if (createCampaignFormData.image) {
+        form.append("image", createCampaignFormData.image);
+      }
+
+      try {
+        let axiosJWT = getAxios();
+        await axiosJWT
+          .post(`/candidate/addCampaign`, form)
+          .then((response) => {
+            console.log(response);
+            if (response.data.status) {
+              toast.success(response.data.message);
+              setShowAddNewCampaignModal(false);
+            } else {
+              toast.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            toast.error(error.response.data.message);
+          });
+      } catch (e) {
+        console.log(e);
+        toast.error("Faild to update, please try again");
+      }
     }
   }
+
+  const handleFileInput = (e) => {
+    console.log(e);
+    if (e.target.files.length > 0) {
+      setCreateCampaignFormData({
+        ...createCampaignFormData,
+        [e.target.name]: e.target.files[0],
+      });
+    }
+  };
+
   return (
     <>
       <main>
@@ -43,180 +113,51 @@ const MyCampaigns = () => {
             <i className="bx bx-plus me-1"></i> New Campaign
           </button>
         </div>
+        {myCampaigns.length ? (
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {myCampaigns.map((campaign) => {
+              return (
+                <div className="campaign">
+                  {campaign.image ? (
+                    <>
+                      <img
+                        src={campaign.image}
+                        alt=""
+                        className="campaignImage m-0"
+                      />
+                    </>
+                  ) : (
+                    ""
+                  )}
 
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          <div className="campaign">
-            <img
-              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
-              alt=""
-              className="campaignImage m-0"
-            />
+                  <h6 className="campaignTitle mt-2">{campaign.title}</h6>
 
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer "
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-
-          <div className="campaign">
-            <img
-              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
-              alt=""
-              className="campaignImage m-0"
-            />
-
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <img
-              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
-              alt=""
-              className="campaignImage m-0"
-            />
-
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <img
-              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
-              alt=""
-              className="campaignImage m-0"
-            />
-
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-          <div className="campaign">
-            <img
-              src="https://www.squareyards.com/blog/wp-content/uploads/2021/09/Square-Yards-OOH-campaign.jpeg"
-              alt=""
-              className="campaignImage m-0"
-            />
-
-            <h6 className="campaignTitle mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </h6>
-
-            <div className="campaignFooter mt-1 d-flex justify-content-between">
-              <span className="cursor-pointer">Monday, 4th October 2021 </span>{" "}
-              <span>
-                <i
-                  className="bx bx-trash text-danger fs-6 cursor-pointer"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Delete Campaign"
-                ></i>
-              </span>
-            </div>
-          </div>
-        </Masonry>
+                  <div className="campaignFooter mt-1 d-flex justify-content-between">
+                    <span className="cursor-pointer">
+                      {new Date(campaign.createdAt).toDateString()}{" "}
+                    </span>{" "}
+                    <span>
+                      <i
+                        className="bx bx-trash text-danger fs-6 cursor-pointer "
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Delete Campaign"
+                      ></i>
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </Masonry>
+        ) : (
+          <>
+            <h4>No campaigns found</h4>
+          </>
+        )}
       </main>
 
       {/* Add New Campaign Modal  */}
@@ -272,9 +213,14 @@ const MyCampaigns = () => {
                 placeholder="Write a few words about your campaign"
                 name="body"
                 onChange={(e) => {
-                  setCreateCampaignFormData({ ...createCampaignFormData, [e.target.name]: e.target.value });
+                  setCreateCampaignFormData({
+                    ...createCampaignFormData,
+                    [e.target.name]: e.target.value,
+                  });
                 }}
-                value={createCampaignFormData ? createCampaignFormData.body : ""}
+                value={
+                  createCampaignFormData ? createCampaignFormData.body : ""
+                }
                 required
               ></textarea>
             </div>
@@ -291,9 +237,8 @@ const MyCampaigns = () => {
                 accept="image/*"
                 name="image"
                 onChange={(e) => {
-                  setCreateCampaignFormData({ ...createCampaignFormData, [e.target.name]: e.target.value });
+                  handleFileInput(e);
                 }}
-                value={createCampaignFormData ? createCampaignFormData.image : ""}
               />
             </div>
             <div className="col-12 text-end">
@@ -305,8 +250,7 @@ const MyCampaigns = () => {
               >
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary"
-              >
+              <button type="submit" className="btn btn-primary">
                 Create Campaign
               </button>
             </div>
