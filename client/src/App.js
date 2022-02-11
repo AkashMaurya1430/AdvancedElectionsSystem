@@ -64,6 +64,7 @@ function App() {
             <Sidebar />
             <Candidates />
           </Route>
+          
           <Route exact path={Routes.eachCandidate}>
             <Sidebar />
             <EachCandidate />

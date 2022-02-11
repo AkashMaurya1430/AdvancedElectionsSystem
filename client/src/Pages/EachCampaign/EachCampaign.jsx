@@ -1,40 +1,98 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getAxios } from "../../Helpers/axios";
+
 import "./EachCampaign.css";
 
 const EachCampaign = () => {
+  const { campaignId } = useParams();
+  const [campaign, setCampaign] = React.useState({});
+
+  React.useEffect(() => {
+    async function getCampaignData() {
+      try {
+        let axiosJWT = getAxios();
+        await axiosJWT
+          .get(`/campaign/${campaignId}`)
+          .then((response) => {
+            // console.log(response);
+            if (response.data.status) {
+              // toast.success(response.data.message);
+              setCampaign(response.data.data);
+            } else {
+              toast.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            toast.error(error.response.data.message);
+          });
+      } catch (e) {
+        console.log(e);
+        toast.error("Faild to update, please try again");
+      }
+    }
+    getCampaignData();
+  }, []);
   return (
     <>
       <main className="eachCampaignPage">
-        <h3 className="text-center mx-auto  campaignTitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero, similique?</h3>
+        <h3 className="text-center mx-auto  campaignTitle">{campaign.title}</h3>
         <div className="campaignAuthor d-flex">
-          <img src="https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg" alt="" />
+          <img
+            src={campaign.createdBy && campaign.createdBy.profilePic}
+            alt=""
+          />
           <div className="ms-2">
-            <h6 className="campaignAuthorName mt-2 mb-1 text-start">Lorem, ipsum dolor.</h6>
+            <h6 className="campaignAuthorName mt-2 mb-1 text-start">
+              {campaign.createdBy && campaign.createdBy.name}
+            </h6>
             <p className="campaignDetails text-muted">
-              <span>Oct 11,2021</span> <span className="ps-2 position-relative">3 min read</span>{" "}
+              <span>{new Date(campaign.createdAt).toDateString()}</span>{" "}
+              <span className="ps-2 position-relative">3 min read</span>{" "}
             </p>
           </div>
           <div className="candidateSocialLinks d-none d-md-block ">
-            <i class="bx bxl-twitter"></i>
-            <i class="bx bxl-instagram-alt"></i>
-            <i class="bx bxl-facebook"></i>
+            {campaign.createdBy && (
+              <a
+                href={campaign.createdBy.socials.twitter}
+                target="_blank"
+                rel="noreferrer noopennor"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                <i class="bx bxl-twitter"></i>
+              </a>
+            )}
+            {campaign.createdBy && (
+              <a
+                href={campaign.createdBy.socials.instagram}
+                target="_blank"
+                rel="noreferrer noopennor"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                <i class="bx bxl-instagram-alt"></i>
+              </a>
+            )}
+            {campaign.createdBy && (
+              <a
+                href={campaign.createdBy.socials.facebook}
+                target="_blank"
+                rel="noreferrer noopennor"
+                style={{ textDecoration: "none" }}
+              >
+                {" "}
+                <i class="bx bxl-facebook"></i>
+              </a>
+            )}
           </div>
         </div>
         <div className="text-center">
-          <img
-            src="https://i2.wp.com/covidnews.eurocities.eu/wp-content/uploads/2020/04/Budapest-poster-COVID19.png?fit=1024%2C1024&ssl=1"
-            alt=""
-            className="campaignImage mx-auto"
-          />
+          <img src={campaign.image} alt="" className="campaignImage mx-auto" />
         </div>
-        <div className="container mt-4 fw-bold">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta aliquam dolores doloremque doloribus praesentium itaque laboriosam culpa
-          magni odit maxime sequi, impedit cupiditate facere, optio perferendis tempora? Autem ullam fugiat quas magni quisquam, esse libero! Eos
-          iusto excepturi in. Modi eligendi totam libero saepe ullam alias suscipit delectus laborum amet quo reiciendis enim ipsam repellendus
-          recusandae non, debitis asperiores culpa similique sequi at accusamus obcaecati, quos accusantium distinctio. Nemo pariatur, excepturi a
-          ullam quis ipsum aliquam repellat tempore corrupti at voluptatibus sunt ipsa iste accusamus dolorum dicta fugiat odio libero cupiditate
-          veniam optio soluta. Ab vero inventore totam itaque ipsa!
-        </div>
+        <div className="container mt-4 fw-bold">{campaign.body} </div>
       </main>
     </>
   );

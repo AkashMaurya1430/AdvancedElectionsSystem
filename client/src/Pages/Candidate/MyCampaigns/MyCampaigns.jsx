@@ -47,6 +47,7 @@ const MyCampaigns = () => {
     getMyCampaigns();
   }, []);
 
+  
   async function addNewCampaign(event) {
     event.preventDefault();
     var form = document.getElementById("addNewCampaignForm");
@@ -94,6 +95,33 @@ const MyCampaigns = () => {
         ...createCampaignFormData,
         [e.target.name]: e.target.files[0],
       });
+    }
+  };
+
+  const deleteCampaign = async (campaignId) => {
+    let body = {
+      campaignId,
+    };
+    try {
+      let axiosJWT = getAxios();
+      await axiosJWT
+        .post(`/candidate/deleteCampaign`, body)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status) {
+            toast.success(response.data.message);
+            setShowAddNewCampaignModal(false);
+          } else {
+            toast.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+          toast.error(error.response.data.message);
+        });
+    } catch (e) {
+      console.log(e);
+      toast.error("Faild to update, please try again");
     }
   };
 
@@ -146,6 +174,9 @@ const MyCampaigns = () => {
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
                         title="Delete Campaign"
+                        onClick={() => {
+                          deleteCampaign(campaign._id);
+                        }}
                       ></i>
                     </span>
                   </div>

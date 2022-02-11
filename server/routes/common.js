@@ -11,6 +11,24 @@ router.post("/signup", commonController.signup);
 
 router.post("/login", commonController.login);
 
-router.get("/candidates",security.isAuth,security.checkRole(["Voter","Candidate","Admin"]),commonController.getCandidates)
+router.get(
+  "/candidates",
+  security.isAuth,
+  security.checkRole(["Voter", "Candidate", "Admin"]),
+  commonController.getCandidates
+);
 
+router.get(
+  "/campaigns",
+  security.isAuth,
+  security.checkRole(["Voter", "Candidate", "Admin"]),
+  commonController.getAllCampaigns
+);
+
+router.get(
+  "/campaign/:id",
+  security.isAuth,
+  security.checkRole(["Voter", "Candidate", "Admin"]),
+  commonController.getCampaignData
+);
 module.exports = router;

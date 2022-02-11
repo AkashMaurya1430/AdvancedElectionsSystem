@@ -145,7 +145,7 @@ module.exports.getMyCampaigns = async (req, res) => {
 
   let myCampaigns = await Campaign.find({ createdBy: req.user.role });
 
-  console.log(myCampaigns);
+  // console.log(myCampaigns);
 
   if (myCampaigns.length) {
     response.status = true;
@@ -159,3 +159,30 @@ module.exports.getMyCampaigns = async (req, res) => {
     return res.status(200).send(response);
   }
 };
+
+module.exports.deleteCampaign = async(req,res)=>{
+  let response = {status:false,message:""}
+
+  let campaignData = await Campaign.findOne({_id:req.body.campaignId})
+
+  
+  if(campaignData.createdBy !=  req.user.role){
+    response.message = "Not Authorized"
+    return res.status(200).send(response)
+  }
+
+  console.log(campaignData,req.user.role);
+
+  await Campaign.findOneAndDelete({_id:req.body.campaignId}).then((result)=>{
+    if(result){
+      response.status = true
+      response.message = "Campaign Deleted Successfully"
+      res.status(200).send(response)
+    } else{
+      response.status = false
+      response.message = "Failed to deleted campaign"
+      res.status(200).send(response)
+    }
+  })
+
+}

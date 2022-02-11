@@ -30,12 +30,17 @@
   font-size: 1.2rem;
   font-weight: 700;
   padding: 0 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
 .campaigns .campaignImage {
   border-radius: 15px;
   max-height: 300px;
   width: 100%;
-  margin: 0.7rem 0;
+  margin-top: 0.7rem;
 }
 
 .campaigns .campaignBody {
@@ -46,6 +51,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   padding: 0 0.25rem;
+  margin-top: 0.7rem;
 }
 
 .campaigns .campaignFooter {

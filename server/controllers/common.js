@@ -4,6 +4,7 @@ const Voter = require("../models/Voter");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 var jwt = require("jsonwebtoken");
+const Campaign = require("../models/Campaign");
 
 module.exports.signup = async (req, res) => {
   let response = {
@@ -68,7 +69,15 @@ module.exports.signup = async (req, res) => {
 
         await User.findOneAndUpdate({ _id: userData._id }, { role: roleId })
           .then((result) => {
-            var token = jwt.sign({ userId: result._id, email: result.email, roleModel: result.roleModel, role: roleId }, process.env.JWT_SECRET);
+            var token = jwt.sign(
+              {
+                userId: result._id,
+                email: result.email,
+                roleModel: result.roleModel,
+                role: roleId,
+              },
+              process.env.JWT_SECRET
+            );
             response.data = {
               token,
             };
@@ -111,7 +120,15 @@ module.exports.login = async (req, res) => {
       if (user) {
         if (bcrypt.compareSync(password, user.password)) {
           response.status = true;
-          var token = jwt.sign({ userId: user._id, email: user.email, roleModel: user.roleModel, role: user.role }, process.env.JWT_SECRET);
+          var token = jwt.sign(
+            {
+              userId: user._id,
+              email: user.email,
+              roleModel: user.roleModel,
+              role: user.role,
+            },
+            process.env.JWT_SECRET
+          );
           response.data = {
             role: user.roleModel,
             token,
@@ -151,11 +168,69 @@ module.exports.getCandidates = async (req, res) => {
       response.status = true;
       reponse.message = "No Candidates Found";
       response.data = candidates;
-
     }
   } catch (error) {
     response.message = "Server Error";
     response.errMessage = error;
     res.status(500).send(response);
   }
+};
+
+module.exports.getAllCampaigns = async (req, res) => {
+  let response = {
+    status: false,
+    message: "",
+    data: {},
+  };
+
+  try {
+    let campaigns = await Campaign.find({}).populate("createdBy");
+    // console.log(campaigns);
+    if (campaigns.length) {
+      response.status = true;
+      response.message = "Campaigns Found";
+      response.data.campaigns = campaigns;
+      res.status(200).send(response);
+    } else {
+      response.status = true;
+      response.message = "No Campaigns Found";
+      response.data.campaigns = campaigns;
+      res.status(200).send(response);
+    }
+  } catch (error) {
+    response.message = "Server Error";
+    response.errMessage = error.message;
+    res.status(500).send(response);
+  }
+};
+
+module.exports.getCampaignData = async (req, res) => {
+  const id = req.params.id
+  
+  let response = {
+    status: false,
+    message: "",
+    data: {},
+  };
+// console.log(id);
+  try {
+    let campaign = await Campaign.findOne({_id:id}).populate("createdBy");
+    // console.log(campaigns);
+    if (campaign) {
+      response.status = true;
+      response.message = "Campaigns Found";
+      response.data = campaign;
+      res.status(200).send(response);
+    } else {
+      response.status = true;
+      response.message = "No Campaigns Found";
+      response.data = campaign;
+      res.status(200).send(response);
+    }
+  } catch (error) {
+    response.message = "Server Error";
+    response.errMessage = error.message;
+    res.status(500).send(response);
+  }
+
 };
