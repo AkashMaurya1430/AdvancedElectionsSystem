@@ -87,7 +87,7 @@ const Campaigns = () => {
           </Masonry>
         ) : (
           <>
-            <h4>No campaigns found</h4>
+            <h5 className="mt-3">No campaigns found</h5>
           </>
         )}
       </main>
