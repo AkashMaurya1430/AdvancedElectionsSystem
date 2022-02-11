@@ -133,3 +133,29 @@ module.exports.login = async (req, res) => {
     res.status(500).send(response);
   }
 };
+
+module.exports.getCandidates = async (req, res) => {
+  let response = {
+    status: false,
+    message: "",
+  };
+
+  try {
+    let candidates = await Candidate.find({ isVerified: true });
+
+    if (candidates.length) {
+      response.status = true;
+      reponse.message = "Candidates Found";
+      response.data = candidates;
+    } else {
+      response.status = true;
+      reponse.message = "No Candidates Found";
+      response.data = candidates;
+
+    }
+  } catch (error) {
+    response.message = "Server Error";
+    response.errMessage = error;
+    res.status(500).send(response);
+  }
+};

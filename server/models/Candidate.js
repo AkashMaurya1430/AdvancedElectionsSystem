@@ -35,6 +35,10 @@ const candidateSchema = mongoose.Schema({
       type: String,
     },
   },
+  isVerified: {
+    type: Boolean,
+    default: true,
+  },
   electionAgendas: [
     {
       title: String,

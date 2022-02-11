@@ -3,7 +3,7 @@ import "./Profile.css";
 import { toast } from "react-toastify";
 import { baseURL } from "../../../Constants";
 import {getAxios} from "../../../Helpers/axios";
-import { valididateTwitterUrl, validateInstagramUrl, validateFacebookUrl } from "../../../Helpers/utils";
+
 let FormData = require("form-data");
 
 const Profile = () => {
@@ -56,16 +56,7 @@ const Profile = () => {
   };
 
   const handleSubmit = async () => {
-    if (formData.instagram !== "" && !validateInstagramUrl(formData.instagram)) {
-      return toast.warn("Please enter correct instagram id");
-    }
-    if (formData.twitter !== "" && !valididateTwitterUrl(formData.twitter)) {
-      return toast.warn("Please enter correct twitter id");
-    }
-    if (formData.facebook !== "" && !validateFacebookUrl(formData.facebook)) {
-      return toast.warn("Please enter correct facebook id");
-    }
-
+ 
     if (formData.profilePic === "" || formData.name === "" || formData.contact === "" || formData.dob === "") {
       toast.warn("All Fields are mandatory.");
       return;
