@@ -151,31 +151,6 @@ module.exports.login = async (req, res) => {
   }
 };
 
-module.exports.getCandidates = async (req, res) => {
-  let response = {
-    status: false,
-    message: "",
-  };
-
-  try {
-    let candidates = await Candidate.find({ isVerified: true });
-
-    if (candidates.length) {
-      response.status = true;
-      reponse.message = "Candidates Found";
-      response.data = candidates;
-    } else {
-      response.status = true;
-      reponse.message = "No Candidates Found";
-      response.data = candidates;
-    }
-  } catch (error) {
-    response.message = "Server Error";
-    response.errMessage = error;
-    res.status(500).send(response);
-  }
-};
-
 module.exports.getAllCampaigns = async (req, res) => {
   let response = {
     status: false,
@@ -205,16 +180,16 @@ module.exports.getAllCampaigns = async (req, res) => {
 };
 
 module.exports.getCampaignData = async (req, res) => {
-  const id = req.params.id
-  
+  const id = req.params.id;
+
   let response = {
     status: false,
     message: "",
     data: {},
   };
-// console.log(id);
+  // console.log(id);
   try {
-    let campaign = await Campaign.findOne({_id:id}).populate("createdBy");
+    let campaign = await Campaign.findOne({ _id: id }).populate("createdBy");
     // console.log(campaigns);
     if (campaign) {
       response.status = true;
@@ -232,5 +207,64 @@ module.exports.getCampaignData = async (req, res) => {
     response.errMessage = error.message;
     res.status(500).send(response);
   }
+};
 
+module.exports.getCandidates = async (req, res) => {
+  let response = {
+    status: false,
+    message: "",
+    data: {},
+  };
+
+  try {
+    let candidates = await Candidate.find({ isVerified: true });
+
+    if (candidates.length) {
+      response.status = true;
+      response.message = "Candidates Found";
+      response.data.candidates = candidates;
+      res.status(200).send(response);
+    } else {
+      response.status = true;
+      response.message = "No Candidates Found";
+      response.data.candidates = candidates;
+      res.status(200).send(response);
+    }
+  } catch (error) {
+    console.log(error);
+    response.message = "Server Error";
+    response.errMessage = error;
+    res.status(500).send(response);
+  }
+};
+
+module.exports.getCandidateData = async (req, res) => {
+  const id = req.params.id;
+
+  let response = {
+    status: false,
+    message: "",
+    data: {},
+  };
+  // console.log(id);
+  try {
+    let candidate = await Candidate.findOne({ _id: id });
+    // console.log(candidates);
+    if (candidate) {
+      response.status = true;
+      response.message = "Candidate Found";
+      response.data = candidate;
+      res.status(200).send(response);
+    } else {
+      response.status = true;
+      response.message = "No candidate Found";
+      response.data = candidate;
+      res.status(200).send(response);
+    }
+  } catch (error) {
+    console.log(error);
+    response.message = "Server Error";
+    response.errMessage = error.message;
+    res.status(500).send(response);
+  }
 };

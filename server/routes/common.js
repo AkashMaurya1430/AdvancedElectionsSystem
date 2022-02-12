@@ -31,4 +31,19 @@ router.get(
   security.checkRole(["Voter", "Candidate", "Admin"]),
   commonController.getCampaignData
 );
+
+router.get(
+  "/candidates",
+  security.isAuth,
+  security.checkRole(["Voter", "Candidate", "Admin"]),
+  commonController.getCandidates
+);
+
+router.get(
+  "/candidate/:id",
+  security.isAuth,
+  security.checkRole(["Voter", "Candidate", "Admin"]),
+  commonController.getCandidateData
+);
+
 module.exports = router;

@@ -19,6 +19,7 @@ module.exports.isAuth = (req, res, next) => {
       user = decoded;
     });
     req.user = user;
+    // console.log(req.user,"User");
   } catch (err) {
     // console.log(err);
     response.message = "Not authenticated, Login to continue";
@@ -29,7 +30,9 @@ module.exports.isAuth = (req, res, next) => {
 
 module.exports.checkRole = (roles) => {
   return (req, res, next) => {
-    // console.log(req.user, "User");
+    console.log(req.user, "User");
+  console.log(req.user.userId);
+
     let response = { success: false, message: "" };
     if (roles.includes(req.user.roleModel)) return next();
     response.message = "Oops , you cannot access this page";
