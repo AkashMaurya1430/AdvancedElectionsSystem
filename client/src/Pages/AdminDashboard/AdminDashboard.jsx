@@ -44,20 +44,42 @@ const AdminDashboard = () => {
                                  <tr>
                                    <th scope="row">1</th>
                                      <td>Pooja Shetty</td>
-                                     <td><a href="https://www.google.com/">Documents</a></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
                                  </tr>
                                  <tr>
                                    <th scope="row">2</th>
                                      <td>Akash Maurya</td>
-                                     <td><a href="https://www.google.com/">Documents</a></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
                                  </tr>
                                  <tr>
                                    <th scope="row">3</th>
                                      <td>Ganesh Yadava</td>
-                                     <td><a href="https://www.google.com/">Documents</a></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
                                  </tr>
-                              </tbody>
+                                 <tr>
+                                   <th scope="row">3</th>
+                                     <td>Ron Weasley</td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
+                                 </tr>
+                              </tbody>  
                           </table>
+                          <div class="modal fade" id="candidateModal" role="dialog">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                   <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <h4 class="modal-title">Modal Header</h4>
+                                   </div>
+                                   <div class="modal-body">
+                                      <p>Some text in the modal.</p>
+                                   </div>
+                                   <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                   </div>
+                              </div>
+      
+                            </div>
+                          </div>
                       </div>
                    </div>
                 </div>
@@ -81,25 +103,24 @@ const AdminDashboard = () => {
                                  <tr>
                                    <th scope="row">1</th>
                                      <td>Pooja Shetty</td>
-                                     <td><a href="https://www.google.com/">Documents</a></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#exampleModal">Documents</button></td>
                                  </tr>
                                  <tr>
                                    <th scope="row">2</th>
                                      <td>Akash Maurya</td>
-                                     <td><a href="https://www.google.com/">Documents</a></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#exampleModal">Documents</button></td>
                                  </tr>
                                  <tr>
                                    <th scope="row">3</th>
                                      <td>Ganesh Yadava</td>
-                                     <td><a href="https://www.google.com/">Documents</a></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#exampleModal">Documents</button></td>
                                  </tr>
                               </tbody>
                           </table>
                       </div>
                    </div>
                 </div>
-            </div>
-                        
+            </div>              
           </main>
         </>
         
