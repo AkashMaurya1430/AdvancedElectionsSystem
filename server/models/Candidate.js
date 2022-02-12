@@ -38,6 +38,7 @@ const candidateSchema = mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: true,
+    required: true,
   },
   electionAgendas: [
     {

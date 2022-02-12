@@ -1,7 +1,7 @@
 export const login = "/";
 
 export const candidates = "/candidates";
-export const eachCandidate = "/candidate";
+export const eachCandidate = "/candidate/:candidateId";
 
 export const campaigns = "/campaigns";
 export const eachCampaign = "/campaign/:campaignId";

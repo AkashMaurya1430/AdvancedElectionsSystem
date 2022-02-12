@@ -6,12 +6,11 @@ const Campaign = require("../models/Campaign");
 
 module.exports.getMyDetails = async (req, res) => {
   let response = { status: false, message: "" };
-
-  await User.findById({ _id: req.user.userId })
+  await User.findOne({ _id: "61ff691f0c78baaca507b0df" })
     .populate("role")
     .select("-password")
     .then((result) => {
-      // console.log(result);
+      console.log(result);
       if (result) {
         response.status = true;
         response.message = "User Found";
@@ -23,6 +22,7 @@ module.exports.getMyDetails = async (req, res) => {
       }
     })
     .catch((e) => {
+      console.log(e);
       response.message = "Internal Server Error";
       response.errMessage = e;
       res.status(500).send(response);
