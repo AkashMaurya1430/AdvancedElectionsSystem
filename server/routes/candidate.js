@@ -16,8 +16,35 @@ router.post(
   candidateController.editProfile
 );
 
-router.get("/mydetails", security.isAuth, security.checkRole(["Candidate"]), candidateController.getMyDetails);
+router.get(
+  "/mydetails",
+  security.isAuth,
+  security.checkRole(["Candidate"]),
+  candidateController.getMyDetails
+);
 
-// router.post("/addAgenda", security.isAuth, security.checkRole(["Candidate"]), candidateController.addAgenda);
+router.post(
+  "/addCampaign",
+  security.isAuth,
+  security.checkRole(["Candidate"]),
+  validate,
+  setDestination("./public/images/campaigns/"),
+  upload.single("image"),
+  candidateController.addCampaign
+);
+
+router.get(
+  "/mycampaigns",
+  security.isAuth,
+  security.checkRole(["Candidate"]),
+  candidateController.getMyCampaigns
+);
+
+router.post(
+  "/deleteCampaign",
+  security.isAuth,
+  security.checkRole(["Candidate"]),
+  candidateController.deleteCampaign
+);
 
 module.exports = router;
