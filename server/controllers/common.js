@@ -1,10 +1,10 @@
 const User = require("../models/User");
 const Candidate = require("../models/Candidate");
+const Campaign = require("../models/Campaign");
 const Voter = require("../models/Voter");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 var jwt = require("jsonwebtoken");
-const Campaign = require("../models/Campaign");
 
 module.exports.signup = async (req, res) => {
   let response = {
@@ -238,33 +238,32 @@ module.exports.getCandidates = async (req, res) => {
   }
 };
 
-module.exports.getCandidateData = async (req, res) => {
-  const id = req.params.id;
+// module.exports.getCandidateDataAkash = async (req, res) => {
+//   const id = req.params.id;
 
-  let response = {
-    status: false,
-    message: "",
-    data: {},
-  };
-  // console.log(id);
-  try {
-    let candidate = await Candidate.findOne({ _id: id });
-    // console.log(candidates);
-    if (candidate) {
-      response.status = true;
-      response.message = "Candidate Found";
-      response.data = candidate;
-      res.status(200).send(response);
-    } else {
-      response.status = true;
-      response.message = "No candidate Found";
-      response.data = candidate;
-      res.status(200).send(response);
-    }
-  } catch (error) {
-    console.log(error);
-    response.message = "Server Error";
-    response.errMessage = error.message;
-    res.status(500).send(response);
-  }
-};
+//   let response = {
+//     status: false,
+//     message: "",
+//     data: {},
+//   };
+//   // console.log(id);
+//   try {
+//     let candidate = await Candidate.findOne({ _id: id });
+//     // console.log(candidates);
+//   //     response.status = true;
+//   //     response.message = "Candidate Found";
+//   //     response.data = candidate;
+//   //     res.status(200).send(response);
+//   //   } else {
+//   //     response.status = true;
+//   //     response.message = "No candidate Found";
+//   //     response.data = candidate;
+//       res.status(200).send("Akash");
+//     // }
+//   } catch (error) {
+//     console.log(error);
+//     response.message = "Server Error";
+//     response.errMessage = error.message;
+//     res.status(500).send(response);
+//   }
+// };

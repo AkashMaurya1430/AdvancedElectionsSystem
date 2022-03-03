@@ -6,7 +6,7 @@ const Campaign = require("../models/Campaign");
 
 module.exports.getMyDetails = async (req, res) => {
   let response = { status: false, message: "" };
-  await User.findOne({ _id: "61ff691f0c78baaca507b0df" })
+  await User.findOne({ _id: req.user.userId })
     .populate("role")
     .select("-password")
     .then((result) => {

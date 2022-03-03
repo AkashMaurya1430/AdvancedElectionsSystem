@@ -54,7 +54,7 @@ const EachCampaign = () => {
             </p>
           </div>
           <div className="candidateSocialLinks d-none d-md-block ">
-            {campaign.createdBy && (
+            {campaign.createdBy && campaign.createdBy.socials && campaign.createdBy.socials.twitter && (
               <a
                 href={campaign.createdBy.socials.twitter}
                 target="_blank"
@@ -65,7 +65,7 @@ const EachCampaign = () => {
                 <i class="bx bxl-twitter"></i>
               </a>
             )}
-            {campaign.createdBy && (
+            {campaign.createdBy && campaign.createdBy.socials && campaign.createdBy.socials.instagram && (
               <a
                 href={campaign.createdBy.socials.instagram}
                 target="_blank"
@@ -76,7 +76,7 @@ const EachCampaign = () => {
                 <i class="bx bxl-instagram-alt"></i>
               </a>
             )}
-            {campaign.createdBy && (
+            {campaign.createdBy && campaign.createdBy.socials && campaign.createdBy.socials.facebook && (
               <a
                 href={campaign.createdBy.socials.facebook}
                 target="_blank"

@@ -40,12 +40,11 @@ router.get(
   candidateController.getMyCampaigns
 );
 
-router.post("/deleteCampaign",
-security.isAuth,
-security.checkRole(["Candidate"]),
-candidateController.deleteCampaign
-
-)
-// router.post("/addAgenda", security.isAuth, security.checkRole(["Candidate"]), candidateController.addAgenda);
+router.post(
+  "/deleteCampaign",
+  security.isAuth,
+  security.checkRole(["Candidate"]),
+  candidateController.deleteCampaign
+);
 
 module.exports = router;

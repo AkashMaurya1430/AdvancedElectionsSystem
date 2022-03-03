@@ -39,11 +39,12 @@ router.get(
   commonController.getCandidates
 );
 
-router.get(
-  "/candidate/:id",
-  security.isAuth,
-  security.checkRole(["Voter", "Candidate", "Admin"]),
-  commonController.getCandidateData
-);
+// router.get(
+//   "/candidate/:id",
+//   security.isAuth,
+//   security.checkRole(["Voter", "Candidate", "Admin"]),
+//   commonController.getCandidateDataAkash
+// );
+
 
 module.exports = router;
