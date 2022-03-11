@@ -6,12 +6,11 @@ const Campaign = require("../models/Campaign");
 
 module.exports.getMyDetails = async (req, res) => {
   let response = { status: false, message: "" };
-
-  await User.findById({ _id: req.user.userId })
+  await User.findOne({ _id: req.user.userId })
     .populate("role")
     .select("-password")
     .then((result) => {
-      // console.log(result);
+      console.log(result);
       if (result) {
         response.status = true;
         response.message = "User Found";
@@ -23,6 +22,7 @@ module.exports.getMyDetails = async (req, res) => {
       }
     })
     .catch((e) => {
+      console.log(e);
       response.message = "Internal Server Error";
       response.errMessage = e;
       res.status(500).send(response);
@@ -31,7 +31,18 @@ module.exports.getMyDetails = async (req, res) => {
 
 module.exports.editProfile = async (req, res) => {
   let response = { status: false, message: "" };
-  let { name, contact, dob, about, profilePic, twitter, instagram, facebook, highestEducation, agendas } = req.body;
+  let {
+    name,
+    contact,
+    dob,
+    about,
+    profilePic,
+    twitter,
+    instagram,
+    facebook,
+    highestEducation,
+    agendas,
+  } = req.body;
 
   if (agendas) {
     agendas = JSON.parse(agendas);
@@ -55,22 +66,28 @@ module.exports.editProfile = async (req, res) => {
   const candidateData = await Candidate.findOne({ _id: req.user.role });
 
   if (req.file && req.file.originalname != "") {
-    updatedCandidate.profilePic = process.env.APP_DEV_URL + "/images/profilePic/" + req.file.filename;
+    updatedCandidate.profilePic =
+      process.env.APP_DEV_URL + "/images/profilePic/" + req.file.filename;
   }
 
-  await Candidate.findOneAndUpdate({ _id: req.user.role }, updatedCandidate, { new: true })
+  await Candidate.findOneAndUpdate({ _id: req.user.role }, updatedCandidate, {
+    new: true,
+  })
     .then((result) => {
       if (result) {
         if (candidateData.profilePic) {
           let imageName = candidateData.profilePic.split("/");
-          let imagepath = path.join(__dirname, "../public/images/profilePic/") + imageName[imageName.length - 1];
+          let imagepath =
+            path.join(__dirname, "../public/images/profilePic/") +
+            imageName[imageName.length - 1];
           // console.log(imagepath, "IMage");
           if (req.file && req.file.originalname != "") {
             fs.unlink(imagepath, (err) => {
               if (err) {
                 response.status = false;
                 response.errMessage = err;
-                response.message = "Failed to update profile , please try again";
+                response.message =
+                  "Failed to update profile , please try again";
                 return res.status(400).json(response);
               }
             });

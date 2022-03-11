@@ -23,3 +23,16 @@
 .adminDashboard .accordion-item{
     width: 80%;
 }
+.adminDashboard .verifyBtn{
+    background-color: var(--orange);
+    font-size: 15px;
+    padding: 0.1rem 1.0rem;
+    border-radius: 4px;
+    font-weight: 400;
+    color: #fff;
+    border-color: var(--orange);
+}
+.adminDashboard .verifyBtn:hover {
+    color: #fff;
+    background-color: var(--green);
+  }

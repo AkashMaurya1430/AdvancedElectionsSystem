@@ -3,7 +3,7 @@ import "./Profile.css";
 import { toast } from "react-toastify";
 import { baseURL } from "../../../Constants";
 import {getAxios} from "../../../Helpers/axios";
-import { valididateTwitterUrl, validateInstagramUrl, validateFacebookUrl } from "../../../Helpers/utils";
+
 let FormData = require("form-data");
 
 const Profile = () => {

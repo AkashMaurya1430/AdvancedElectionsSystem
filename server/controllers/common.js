@@ -239,6 +239,7 @@ module.exports.getCandidates = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 module.exports.getSingleCandidateData = async (req, res) => {
   const id = req.params.id;
 
@@ -294,3 +295,34 @@ module.exports.getSlots = async (req, res) => {
     res.status(500).send(response);
   }
 };
+=======
+// module.exports.getCandidateDataAkash = async (req, res) => {
+//   const id = req.params.id;
+
+//   let response = {
+//     status: false,
+//     message: "",
+//     data: {},
+//   };
+//   // console.log(id);
+//   try {
+//     let candidate = await Candidate.findOne({ _id: id });
+//     // console.log(candidates);
+//   //     response.status = true;
+//   //     response.message = "Candidate Found";
+//   //     response.data = candidate;
+//   //     res.status(200).send(response);
+//   //   } else {
+//   //     response.status = true;
+//   //     response.message = "No candidate Found";
+//   //     response.data = candidate;
+//       res.status(200).send("Akash");
+//     // }
+//   } catch (error) {
+//     console.log(error);
+//     response.message = "Server Error";
+//     response.errMessage = error.message;
+//     res.status(500).send(response);
+//   }
+// };
+>>>>>>> 6428c0f4517b5df3c867f2710b6c887627488f87
