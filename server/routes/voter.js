@@ -15,6 +15,21 @@ router.post(
   voterController.editProfile
 );
 
-router.get("/mydetails", security.isAuth, security.checkRole(["Voter"]), voterController.getMyDetails);
+router.get(
+  "/mydetails",
+  security.isAuth,
+  security.checkRole(["Voter"]),
+  voterController.getMyDetails
+);
+
+router.post(
+  "/bookSlot",
+  security.isAuth,
+  security.checkRole(["Voter"]),
+  voterController.bookSlot
+);
+
+
+
 
 module.exports = router;

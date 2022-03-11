@@ -46,7 +46,9 @@ const EachCampaign = () => {
           />
           <div className="ms-2">
             <h6 className="campaignAuthorName mt-2 mb-1 text-start">
+              <a href={`/candidate/${campaign.createdBy && campaign.createdBy._id}`} style={{all:"inherit",cursor:"pointer"}}>
               {campaign.createdBy && campaign.createdBy.name}
+              </a>
             </h6>
             <p className="campaignDetails text-muted">
               <span>{new Date(campaign.createdAt).toDateString()}</span>{" "}

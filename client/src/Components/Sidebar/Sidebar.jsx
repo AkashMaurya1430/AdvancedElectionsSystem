@@ -36,10 +36,10 @@ const Sidebar = () => {
 
               {/* Voter  */}
 
-              {/* <NavLink className="nav__link" activeClassName="nav__link-active" to="/voter/slots">
+              <NavLink className="nav__link" activeClassName="nav__link-active" to={Routes.slotBooking}>
                 <i className="bx bx-calendar-plus nav__icon"></i>
                 <span className="nav__name">Slot Booking</span>
-              </NavLink> */}
+              </NavLink>
             </div>
           </div>
 

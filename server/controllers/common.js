@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Candidate = require("../models/Candidate");
 const Campaign = require("../models/Campaign");
 const Voter = require("../models/Voter");
+const Slot = require("../models/Slots");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 var jwt = require("jsonwebtoken");
@@ -69,7 +70,15 @@ module.exports.signup = async (req, res) => {
 
         await User.findOneAndUpdate({ _id: userData._id }, { role: roleId })
           .then((result) => {
-            var token = jwt.sign({ userId: result._id, email: result.email, roleModel: result.roleModel, role: roleId }, process.env.JWT_SECRET);
+            var token = jwt.sign(
+              {
+                userId: result._id,
+                email: result.email,
+                roleModel: result.roleModel,
+                role: roleId,
+              },
+              process.env.JWT_SECRET
+            );
             response.data = {
               token,
             };
@@ -112,7 +121,15 @@ module.exports.login = async (req, res) => {
       if (user) {
         if (bcrypt.compareSync(password, user.password)) {
           response.status = true;
-          var token = jwt.sign({ userId: user._id, email: user.email, roleModel: user.roleModel, role: user.role }, process.env.JWT_SECRET);
+          var token = jwt.sign(
+            {
+              userId: user._id,
+              email: user.email,
+              roleModel: user.roleModel,
+              role: user.role,
+            },
+            process.env.JWT_SECRET
+          );
           response.data = {
             role: user.roleModel,
             token,
@@ -222,7 +239,7 @@ module.exports.getCandidates = async (req, res) => {
   }
 };
 
-module.exports.getCandidateDataAkash = async (req, res) => {
+module.exports.getSingleCandidateData = async (req, res) => {
   const id = req.params.id;
 
   let response = {
@@ -230,25 +247,50 @@ module.exports.getCandidateDataAkash = async (req, res) => {
     message: "",
     data: {},
   };
-  // console.log(id);
-  // try {
-  //   let candidate = await Candidate.findOne({ _id: id });
-  //   // console.log(candidates);
-  //   if (candidate) {
-  //     response.status = true;
-  //     response.message = "Candidate Found";
-  //     response.data = candidate;
-  //     res.status(200).send(response);
-  //   } else {
-  //     response.status = true;
-  //     response.message = "No candidate Found";
-  //     response.data = candidate;
+
+  try {
+    let candidate = await Candidate.findById({ _id: id });
+    // console.log(candidate);
+    if (candidate) {
+      response.status = true;
+      response.message = "Candidate Found";
+      response.data = candidate;
+      res.status(200).send(response);
+    } else {
+      response.status = true;
+      response.message = "No candidate Found";
+      response.data = candidate;
       res.status(200).send("Akash");
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   response.message = "Server Error";
-  //   response.errMessage = error.message;
-  //   res.status(500).send(response);
-  // }
+    }
+  } catch (error) {
+    console.log(error);
+    response.message = "Server Error";
+    response.errMessage = error.message;
+    res.status(500).send(response);
+  }
+};
+
+module.exports.getSlots = async (req, res) => {
+  let response = { status: false, message: "", data: {} };
+
+  try {
+    let slots = await Slot.find();
+
+    if (slots.length) {
+      response.status = true;
+      response.message = "Slots Found";
+      response.data.slots = slots;
+      res.status(200).send(response);
+    } else {
+      response.status = true;
+      response.message = "No slots Found";
+      response.data.slots = slots;
+      res.status(200).send(response);
+    }
+  } catch (error) {
+    console.log(error);
+    response.message = "Server Error";
+    response.errMessage = error;
+    res.status(500).send(response);
+  }
 };

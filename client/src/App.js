@@ -44,30 +44,44 @@ function App() {
             <CandidateEditProfile />
           </Route>
           <Route exact path={Routes.myCampaigns}>
+            <Sidebar />
+
             <MyCampaigns />
           </Route>
 
           {/* Admin Routes */}
           <Route exact path={Routes.adminDashboard}>
+            <Sidebar />
+
             <AdminDashboard />
           </Route>
 
           <Route exact path={Routes.votingResult}>
+            <Sidebar />
+
             <VotingResult />
           </Route>
 
           {/* Common Routes  */}
           <Route exact path={Routes.candidates}>
+            <Sidebar />
+
             <Candidates />
           </Route>
           <Route exact path={Routes.eachCandidate}>
+            <Sidebar />
+
             <EachCandidate />
           </Route>
 
           <Route exact path={Routes.campaigns}>
+            <Sidebar />
+
             <Campaigns />
           </Route>
           <Route exact path={Routes.eachCampaign}>
+            <Sidebar />
+
             <EachCampaign />
           </Route>
           <Route path="/"></Route>

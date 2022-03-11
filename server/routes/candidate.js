@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const candidateController = require("../controllers/candidate");
+const commonController = require("../controllers/common");
 const { upload, setDestination } = require("../middlewares/imageHandler");
 const validate = require("../middlewares/validate");
 const security = require("../middlewares/security");
@@ -47,4 +48,10 @@ router.post(
   candidateController.deleteCampaign
 );
 
+router.get(
+  "/:id",
+  security.isAuth,
+  security.checkRole(["Voter", "Candidate", "Admin"]),
+  commonController.getSingleCandidateData
+);
 module.exports = router;

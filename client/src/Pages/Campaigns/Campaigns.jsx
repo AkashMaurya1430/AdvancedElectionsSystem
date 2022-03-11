@@ -57,7 +57,7 @@ const Campaigns = () => {
                   <div className="d-flex align-items-center campaignHeader">
                     <img src={campaign.createdBy.profilePic} alt="" />
                     <h6 className="ms-2">
-                      <a href={Routes.eachCandidate}>
+                      <a href={`/candidate/${campaign.createdBy && campaign.createdBy._id}`}>
                         {campaign.createdBy.name}
                       </a>
                     </h6>

@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Voter = require("../models/Voter");
+const Slot = require("../models/Slots");
 let path = require("path");
 const fs = require("fs");
 
@@ -18,16 +19,21 @@ module.exports.editProfile = async (req, res) => {
   const voterData = await Voter.findOne({ _id: req.user.role });
 
   if (req.file && req.file.originalname != "") {
-    updatedVoter.profilePic = process.env.APP_DEV_URL + "/images/profilePic/" + req.file.filename;
+    updatedVoter.profilePic =
+      process.env.APP_DEV_URL + "/images/profilePic/" + req.file.filename;
   }
 
-  await Voter.findOneAndUpdate({ _id: req.user.role }, updatedVoter, { new: true })
+  await Voter.findOneAndUpdate({ _id: req.user.role }, updatedVoter, {
+    new: true,
+  })
     .then((result) => {
       if (result) {
         let imageName = voterData.profilePic.split("/");
-        let imagepath = path.join(__dirname, "../public/images/profilePic/") + imageName[imageName.length - 1];
+        let imagepath =
+          path.join(__dirname, "../public/images/profilePic/") +
+          imageName[imageName.length - 1];
         // console.log(imagepath, "IMage");
-        if(req.file && req.file.originalname != ""){
+        if (req.file && req.file.originalname != "") {
           fs.unlink(imagepath, (err) => {
             if (err) {
               response.status = false;
@@ -78,5 +84,40 @@ module.exports.getMyDetails = async (req, res) => {
       response.errMessage = e;
       res.status(500).send(response);
     });
+};
 
+module.exports.bookSlot = async (req, res) => {
+  let response = { status: true, message: "" };
+
+  const { slotId } = req.body;
+
+  let slot = await Slot.findById({ _id: slotId });
+
+  console.log(req.user);
+
+  if (slot.bookedBy.length > slot.size) {
+    response.message = "Slot Full";
+    return res.status(200).send(response);
+  }
+
+  if (slot) {
+    await Slot.findByIdAndUpdate(
+      { _id: slotId },
+      { $addToSet: { bookedBy: req.user.role } }
+    )
+      .then((result) => {
+        // console.log(result);
+        response.message = "Slot Booked Successfully";
+        response.status = true;
+        res.status(200).send(response);
+      })
+      .catch((err) => {
+        response.message = "Failed to book slot";
+        response.errMessage = err;
+        res.status(500).send(response);
+      });
+  } else {
+    response.message = "Slot not Found";
+    res.status(200).send(response);
+  }
 };
