@@ -95,18 +95,34 @@ module.exports.bookSlot = async (req, res) => {
 
   console.log(req.user);
 
+  // Check if slots are filled or not
   if (slot.bookedBy.length > slot.size) {
     response.message = "Slot Full";
     return res.status(200).send(response);
   }
+
+  const voterData = await Voter.findById({ _id: req.user.role });
+
+  // deleting previous slot booked
+  if (voterData.bookedSlot) {
+    await Slot.findByIdAndUpdate(
+      { _id: voterData.bookedSlot },
+      { $pull: { bookedBy: req.user.role } }
+    );
+  }
+  // return;
 
   if (slot) {
     await Slot.findByIdAndUpdate(
       { _id: slotId },
       { $addToSet: { bookedBy: req.user.role } }
     )
-      .then((result) => {
+      .then(async (result) => {
         // console.log(result);
+        await Voter.findByIdAndUpdate(
+          { _id: req.user.role },
+          { $set: { bookedSlot: result._id } }
+        );
         response.message = "Slot Booked Successfully";
         response.status = true;
         res.status(200).send(response);

@@ -21,11 +21,13 @@ const SlotBooking = () => {
             if (response.data.status) {
               // toast.success(response.data.message);
               setSlots(response.data.data.slots);
-              // response.data.data.slots.forEach(slot => {
-              //   slot.bookedBy.forEach((voter)=>{
-              //     if(voter === )
-              //   })
-              // });
+              response.data.data.slots.forEach(slot => {
+                slot.bookedBy.forEach((voter)=>{
+                  if(voter === response.data.data.voterId){
+                    setSelectedSlot(slot._id)
+                  }
+                })
+              });
             } else {
               toast.error(response.data.message);
             }

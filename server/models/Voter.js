@@ -25,6 +25,10 @@ const voterSchema = mongoose.Schema(
     about: {
       type: String,
     },
+    bookedSlot: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Slot",
+    },
   },
   {
     timestamps: true,
