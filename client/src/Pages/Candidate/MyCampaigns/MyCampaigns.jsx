@@ -29,7 +29,7 @@ const MyCampaigns = () => {
           .then((response) => {
             console.log(response);
             if (response.data.status) {
-              toast.success(response.data.message);
+              // toast.success(response.data.message);
               setMyCampaigns(response.data.data.campaigns);
             } else {
               toast.error(response.data.message);

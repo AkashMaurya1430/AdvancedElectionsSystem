@@ -18,6 +18,7 @@ import VotingResult from "./Pages/VotingResult/VotingResult.jsx";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./ProtectedRoute.js";
 
 function App() {
   return (
@@ -28,58 +29,59 @@ function App() {
           <Route exact path={Routes.login} component={Login} />
 
           {/* Voter Routes */}
-          <Route exact path={Routes.voterEditProfile}>
+          <ProtectedRoute exact path={Routes.voterEditProfile} authRole={["Voter"]}>
             <Sidebar />
             <VoterEditProfile />
-          </Route>
+          </ProtectedRoute>
 
-          <Route exact path={Routes.slotBooking}>
+          <ProtectedRoute exact path={Routes.slotBooking} authRole={["Voter"]}>
             <Sidebar />
             <SlotBooking />
-          </Route>
+          </ProtectedRoute>
 
           {/* Candidate Routes */}
-          <Route exact path={Routes.candidateEditProfile}>
+          <ProtectedRoute exact path={Routes.candidateEditProfile} authRole={["Candidate"]}> 
             <Sidebar />
             <CandidateEditProfile />
-          </Route>
-          <Route exact path={Routes.myCampaigns}>
+          </ProtectedRoute>
+          
+          <ProtectedRoute exact path={Routes.myCampaigns} authRole={["Candidate"]}>
             <Sidebar />
-
             <MyCampaigns />
-          </Route>
+          </ProtectedRoute>
 
           {/* Admin Routes */}
-          <Route exact path={Routes.adminDashboard}>
+          <ProtectedRoute exact path={Routes.adminDashboard} authRole={["Admin"]}>
             <Sidebar />
             <AdminDashboard />
-          </Route>
+          </ProtectedRoute>
 
-          <Route exact path={Routes.votingResult}>
+          <ProtectedRoute exact path={Routes.votingResult} authRole={["Admin"]}>
             <Sidebar />
             <VotingResult />
-          </Route>
+          </ProtectedRoute>
 
           {/* Common Routes  */}
-          <Route exact path={Routes.candidates}>
+          <ProtectedRoute exact path={Routes.candidates} authRole={["Admin","Candidate","Voter"]}>
             <Sidebar />
             <Candidates />
-          </Route>
+          </ProtectedRoute>
           
-          <Route exact path={Routes.eachCandidate}>
+          <ProtectedRoute exact path={Routes.eachCandidate} authRole={["Admin","Candidate","Voter"]}>
             <Sidebar />
             <EachCandidate />
-          </Route>
+          </ProtectedRoute>
 
-          <Route exact path={Routes.campaigns}>
+          <ProtectedRoute exact path={Routes.campaigns} authRole={["Admin","Candidate","Voter"]}>
             <Sidebar />
             <Campaigns />
-          </Route>
-          <Route exact path={Routes.eachCampaign}>
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path={Routes.eachCampaign} authRole={["Admin","Candidate","Voter"]}>
             <Sidebar />
             <EachCampaign />
-          </Route>
-          <Route path="/"></Route>
+          </ProtectedRoute>
+
         </Switch>
       </Router>
     </>
