@@ -29,6 +29,12 @@ const voterSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Slot",
     },
+    isVerified: {
+      type: Boolean,
+      default: true,
+      required: true,
+
+    },
   },
   {
     timestamps: true,

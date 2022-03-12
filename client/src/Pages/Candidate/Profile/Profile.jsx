@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 let FormData = require("form-data");
 
 const Profile = () => {
-  
   const [formData, setFormData] = React.useState({
     profilePic: "",
     name: "",
@@ -29,25 +28,50 @@ const Profile = () => {
         .get("/candidate/myDetails")
         .then((response) => {
           console.log(response);
-          if (response.status) {
+          if (response.data.status) {
             setFormData({
-              name: response.data.data.role.name ? response.data.data.role.name : "",
-              contact: response.data.data.role.contact ? response.data.data.role.contact : "",
-              about: response.data.data.role.about ? response.data.data.role.about : "",
-              highestEducation: response.data.data.role.highestEducation ? response.data.data.role.highestEducation : "",
-              dob: response.data.data.role.dob ? new Date(response.data.data.role.dob).toISOString().substr(0, 10) : "",
+              name: response.data.data.role.name
+                ? response.data.data.role.name
+                : "",
+              contact: response.data.data.role.contact
+                ? response.data.data.role.contact
+                : "",
+              about: response.data.data.role.about
+                ? response.data.data.role.about
+                : "",
+              highestEducation: response.data.data.role.highestEducation
+                ? response.data.data.role.highestEducation
+                : "",
+              dob: response.data.data.role.dob
+                ? new Date(response.data.data.role.dob)
+                    .toISOString()
+                    .substr(0, 10)
+                : "",
               email: response.data.data ? response.data.data.email : "",
-              twitter: response.data.data.role.socials && response.data.data.role.socials.twitter ? response.data.data.role.socials.twitter : "",
+              twitter:
+                response.data.data.role.socials &&
+                response.data.data.role.socials.twitter
+                  ? response.data.data.role.socials.twitter
+                  : "",
               instagram:
-                response.data.data.role.socials && response.data.data.role.socials.instagram ? response.data.data.role.socials.instagram : "",
-              facebook: response.data.data.role.socials && response.data.data.role.socials.facebook ? response.data.data.role.socials.facebook : "",
+                response.data.data.role.socials &&
+                response.data.data.role.socials.instagram
+                  ? response.data.data.role.socials.instagram
+                  : "",
+              facebook:
+                response.data.data.role.socials &&
+                response.data.data.role.socials.facebook
+                  ? response.data.data.role.socials.facebook
+                  : "",
             });
-            setAgendas(response.data.data.role.electionAgendas)
+            setAgendas(response.data.data.role.electionAgendas);
             setImageUrl(
               response.data.data.role.profilePic
                 ? response.data.data.role.profilePic
                 : "https://pbs.twimg.com/profile_images/1346200826998644736/GXKFXDl7_400x400.jpg"
             );
+          } else {
+            toast.error(response.data.message);
           }
         })
         .catch((e) => {
@@ -93,8 +117,7 @@ const Profile = () => {
   };
 
   const submitProfileData = async () => {
-
-   // if (formData.instagram !== "" && !validateInstagramUrl(formData.instagram)) {
+    // if (formData.instagram !== "" && !validateInstagramUrl(formData.instagram)) {
     //   return toast.warn("Please enter correct instagram id");
     // }
     // if (formData.twitter !== "" && !valididateTwitterUrl(formData.twitter)) {
@@ -104,8 +127,13 @@ const Profile = () => {
     //   return toast.warn("Please enter correct facebook id");
     // }
 
-
-    if (formData.name === "" || formData.contact === "" || formData.about === "" || formData.highestEducation === "" || formData.dob === "") {
+    if (
+      formData.name === "" ||
+      formData.contact === "" ||
+      formData.about === "" ||
+      formData.highestEducation === "" ||
+      formData.dob === ""
+    ) {
       return toast.warn("Please fill basic info.");
     }
 
@@ -161,7 +189,9 @@ const Profile = () => {
     <>
       <main>
         <h4 className="pageTitle mb-1">Profile</h4>
-        <p className="pageSubTitle">Manage your personal info and contact information.</p>
+        <p className="pageSubTitle">
+          Manage your personal info and contact information.
+        </p>
 
         <div className="basicInfoContainer mt-4">
           <h5>Basic Info</h5>
@@ -233,7 +263,14 @@ const Profile = () => {
               <label htmlFor="emailID" className="form-label">
                 Email ID <span>*</span>
               </label>
-              <input type="email" className="form-control" id="emailID" placeholder="" value={formData ? formData.email : ""} disabled />
+              <input
+                type="email"
+                className="form-control"
+                id="emailID"
+                placeholder=""
+                value={formData ? formData.email : ""}
+                disabled
+              />
             </div>
 
             {/* DOB  */}
@@ -361,7 +398,8 @@ const Profile = () => {
                 setShowAgendaModal(true);
               }}
             >
-              <i className="bx bx-plus" style={{ marginTop: "3px" }}></i> <span> New Agenda</span>
+              <i className="bx bx-plus" style={{ marginTop: "3px" }}></i>{" "}
+              <span> New Agenda</span>
             </span>
           </h5>
 
@@ -415,19 +453,36 @@ const Profile = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form id="addNewAgendaModal" action="" className="needs-validation" onSubmit={addNewAgenda}>
+          <form
+            id="addNewAgendaModal"
+            action=""
+            className="needs-validation"
+            onSubmit={addNewAgenda}
+          >
             <div className="mb-3 col-12  ">
               <label htmlFor="newAgendaTitle" className="form-label">
                 Agenda Title
               </label>
-              <input type="text" className="form-control" id="newAgendaTitle" placeholder="Title" required />
+              <input
+                type="text"
+                className="form-control"
+                id="newAgendaTitle"
+                placeholder="Title"
+                required
+              />
             </div>
 
             <div className="mb-3 col-12  ">
               <label htmlFor="newAgendaDesc" className="form-label">
                 Agenda Desc
               </label>
-              <textarea name="" id="newAgendaDesc" className="form-control" placeholder="Write a few words about your agenda" required></textarea>
+              <textarea
+                name=""
+                id="newAgendaDesc"
+                className="form-control"
+                placeholder="Write a few words about your agenda"
+                required
+              ></textarea>
             </div>
             <div className="col-12 text-end">
               <button

@@ -36,6 +36,6 @@ module.exports.checkRole = (roles) => {
     let response = { success: false, message: "" };
     if (roles.includes(req.user.roleModel)) return next();
     response.message = "Oops , you cannot access this page";
-    return res.status(401).send(response);
+    return res.status(200).send(response);
   };
 };

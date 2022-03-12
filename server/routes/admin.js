@@ -9,4 +9,9 @@ router.get('/',(req,res)=>{
 
 router.post("/createSlot",security.isAuth,security.checkRole(["Admin"]),adminController.createSlot)
 
+router.post("/approveCandidate",security.isAuth,security.checkRole(["Admin"]),adminController.approveCandidate)
+
+router.post("/approveVoter",security.isAuth,security.checkRole(["Admin"]),adminController.approveVoter)
+
+
 module.exports = router;
