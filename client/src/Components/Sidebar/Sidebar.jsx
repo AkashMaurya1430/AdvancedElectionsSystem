@@ -50,14 +50,6 @@ const Sidebar = () => {
               {/* Voter  */}
               {profile.role === "Voter" ? (
                 <>
-                  <NavLink
-                    className="nav__link"
-                    activeClassName="nav__link-active"
-                    to={Routes.slotBooking}
-                  >
-                    <i className="bx bx-calendar-plus nav__icon"></i>
-                    <span className="nav__name">Slot Booking</span>
-                  </NavLink>
 
                   <NavLink
                     className="nav__link"
@@ -66,6 +58,14 @@ const Sidebar = () => {
                   >
                     <i className="bx bx-user nav__icon"></i>
                     <span className="nav__name">Profile Edit</span>
+                  </NavLink>
+                  <NavLink
+                    className="nav__link"
+                    activeClassName="nav__link-active"
+                    to={Routes.slotBooking}
+                  >
+                    <i className="bx bx-calendar-plus nav__icon"></i>
+                    <span className="nav__name">Slot Booking</span>
                   </NavLink>
                 </>
               ) : (

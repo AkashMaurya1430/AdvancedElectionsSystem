@@ -39,6 +39,8 @@ const Login = () => {
               history.push(Routes.voterEditProfile);
             } else if (response.data.data.role === "Candidate") {
               history.push(Routes.candidateEditProfile);
+            } else if (response.data.data.role === "Admin") {
+              history.push(Routes.adminDashboard);
             }
           } else {
             toast.error(response.data.message);
