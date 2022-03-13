@@ -19,6 +19,7 @@ import VotingResult from "./Pages/VotingResult/VotingResult.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./ProtectedRoute.js";
+import Vote from "./Pages/Admin/Vote/Vote.jsx";
 
 function App() {
   return (
@@ -61,6 +62,11 @@ function App() {
             <VotingResult />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path={Routes.vote} authRole={["Admin"]}>
+            <Sidebar />
+            <Vote/>
+          </ProtectedRoute>
+
           {/* Common Routes  */}
           <ProtectedRoute exact path={Routes.candidates} authRole={["Admin","Candidate","Voter"]}>
             <Sidebar />
@@ -81,6 +87,8 @@ function App() {
             <Sidebar />
             <EachCampaign />
           </ProtectedRoute>
+
+
 
         </Switch>
       </Router>

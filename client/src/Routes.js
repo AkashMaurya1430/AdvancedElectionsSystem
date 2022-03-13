@@ -15,3 +15,4 @@ export const slotBooking = "/voter/bookslot";
 
 export const adminDashboard = "/admin/dashboard";
 export const votingResult = "/admin/result";
+export const vote = "/admin/vote"
