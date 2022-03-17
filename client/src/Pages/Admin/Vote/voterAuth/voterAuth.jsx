@@ -1,53 +1,49 @@
 import React from "react";
 import * as Routes from "../../../../Routes";
 import { toast } from "react-toastify";
+import { getAxios } from "../../../../Helpers/axios";
 
-const VoterAuth = () => {
+const VoterAuth = (props) => {
   const [formData, setFormData] = React.useState();
 
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     let form = document.getElementById("loginForm");
-  //     form.classList.add("was-validated");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    let form = document.getElementById("loginForm");
+    form.classList.add("was-validated");
 
-  //     if (form.checkValidity() === false) {
-  //       event.preventDefault();
-  //       event.stopPropagation();
-  //       return;
-  //     } else {
-  //       axios
-  //         .post(`${baseURL}/login`, formData)
-  //         .then((response) => {
-  //           console.log(response);
-  //           if (response.data.status) {
-  //             window.localStorage.setItem(
-  //               "profile",
-  //               JSON.stringify(response.data.data)
-  //             );
-  //             toast.success(response.data.message);
-  //             if (response.data.data.role === "Voter") {
-  //               history.push(Routes.voterEditProfile);
-  //             } else if (response.data.data.role === "Candidate") {
-  //               history.push(Routes.candidateEditProfile);
-  //             } else if (response.data.data.role === "Admin") {
-  //               history.push(Routes.adminDashboard);
-  //             }
-  //           } else {
-  //             toast.error(response.data.message);
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //           toast.error("Internal Server Error");
-  //         });
-  //     }
-  //   };
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    } else {
+      let axiosJWT = getAxios();
+
+      await axiosJWT
+        .post(`/admin/getVoterData`, formData)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status) {
+            props.setVoterData(response.data.data.user);
+            props.setStep(2)
+            toast.success(response.data.message);
+          } else {
+            toast.error(response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Internal Server Error");
+        });
+    }
+  };
+
   return (
     <>
-      <div className="voterAuthForm">
+      <div className="voterAuthForm mt-5">
+        <h5 className="mb-3">1. Login with your account</h5>
         <form
-          // onSubmit={}
-          className="loginForm mt-5  needs-validation"
+          onSubmit={handleSubmit}
+          className="loginForm   needs-validation"
           id="loginForm"
           noValidate
         >
