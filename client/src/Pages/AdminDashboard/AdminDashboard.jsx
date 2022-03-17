@@ -1,8 +1,17 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import Validate from "./Validate";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
+
+   const history = useHistory();
+   const [showValidateModal, setShowValidateModal] = useState(false);
+   const [formData, setFormData] = React.useState();
+
+   function hideValidateModal() {
+     setShowValidateModal(false);
+   }
 
     return (
         <>
@@ -44,12 +53,18 @@ const AdminDashboard = () => {
                                  <tr>
                                    <th scope="row">1</th>
                                      <td>Pooja Shetty</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal" onClick={(e) => {
+                                        e.preventDefault();
+                                        setShowValidateModal(true);
+                                     }}
+                                     >
+                                       Documents
+                                       </button></td>
                                  </tr>
                                  <tr>
                                    <th scope="row">2</th>
                                      <td>Akash Maurya</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
+                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal" >Documents</button></td>
                                  </tr>
                                  <tr>
                                    <th scope="row">3</th>
@@ -122,9 +137,10 @@ const AdminDashboard = () => {
                 </div>
             </div>              
           </main>
+          <Validate show={showValidateModal} handleModal={hideValidateModal} />
         </>
         
-    )
-}
+    );
+};
 
 export default AdminDashboard;
