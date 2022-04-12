@@ -64,11 +64,11 @@ const AdminDashboard = () => {
       }
     }
 
-    if (filter === "Candidates") {
-      getCandidates();
-    } else {
-      getVoters();
-    }
+    // if (filter === "Candidates") {
+    getCandidates();
+    // } else {
+    getVoters();
+    // }
   }, [filter]);
 
   function hideValidateModal() {
@@ -83,13 +83,13 @@ const AdminDashboard = () => {
           <div className="col-12 col-md-4 mt-3 mt-md-4 card-style">
             <div className="candidate card cardBody">
               <h5 className="pageTitle">Total Voters</h5>
-              <p className="total-count">6,250</p>
+              <p className="total-count">{voters.length}</p>
             </div>
           </div>
           <div className="col-12 col-md-4 mt-3 mt-md-4 card-style">
             <div className="candidate card cardBody">
               <h5 className="pageTitle">Total Candidates</h5>
-              <p className="total-count">10</p>
+              <p className="total-count">{candidates.length}</p>
             </div>
           </div>
         </div>
@@ -98,10 +98,7 @@ const AdminDashboard = () => {
         <div className="mt-3 d-flex align-items-center">
           <h6>Filter By</h6>
           <button
-            className={
-              "btn ms-3 mx-4 adminDashboardTabs " +
-              (filter === "Candidates" ? "activeTab" : "")
-            }
+            className={"btn ms-3 mx-4 adminDashboardTabs " + (filter === "Candidates" ? "activeTab" : "")}
             onClick={() => {
               setFilter("Candidates");
             }}
@@ -109,10 +106,7 @@ const AdminDashboard = () => {
             Candidates
           </button>
           <button
-            className={
-              "btn adminDashboardTabs " +
-              (filter === "Voters" ? "activeTab" : "")
-            }
+            className={"btn adminDashboardTabs " + (filter === "Voters" ? "activeTab" : "")}
             onClick={() => {
               setFilter("Voters");
             }}
@@ -125,7 +119,7 @@ const AdminDashboard = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">{filter === "Candidates" ? "Candidate":"Voter"} Name</th>
+              <th scope="col">{filter === "Candidates" ? "Candidate" : "Voter"} Name</th>
               <th scope="col">Check Documents</th>
             </tr>
           </thead>
@@ -187,12 +181,7 @@ const AdminDashboard = () => {
 
       {showValidateModal ? (
         <>
-          <Validate
-            show={showValidateModal}
-            handleModal={hideValidateModal}
-            userData={selectedUser}
-            userType={filter}
-          />
+          <Validate show={showValidateModal} handleModal={hideValidateModal} userData={selectedUser} userType={filter} />
         </>
       ) : (
         <></>

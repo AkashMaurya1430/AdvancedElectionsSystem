@@ -15,17 +15,17 @@ const initMiddleware = (app) => {
   app.use(logger("dev"));
   app.use(cors());
 
-  // var process = spawn("python", [
-  //   "facialRecognition.py",
-  //   webCamImage,
-  //   voterDbImage,
-  // ]);
+  var process = spawn("python", [
+    "facialRecognition.py",
+    webCamImage,
+    webCamImage,
+  ]);
 
   // Takes stdout data from script which executed
   // with arguments and send this data to res object
-  // process.stdout.on("data", function (data) {
-  //   console.log(data.toString());
-  // });
+  process.stdout.on("data", function (data) {
+    console.log(data.toString());
+  });
 };
 
 

@@ -1,6 +1,7 @@
 print("Running Code....")
+# python -m pip install cmake
 import cv2
-# python3 -m pip install opencv-python
+# python -m pip install opencv-python
 import face_recognition
 # python3 -m pip install face_recognition
 
