@@ -1,146 +1,204 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import Validate from "./Validate";
+import { toast } from "react-toastify";
+import { getAxios } from "../../Helpers/axios";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
+  const history = useHistory();
+  const [showValidateModal, setShowValidateModal] = useState(false);
+  const [formData, setFormData] = React.useState();
+  const [candidates, setCandidates] = React.useState([]);
+  const [voters, setVoters] = React.useState([]);
+  const [selectedUser, setSelectedUser] = React.useState();
+  // To filter data according to voter and candidates
+  const [filter, setFilter] = React.useState("Candidates");
 
-   const history = useHistory();
-   const [showValidateModal, setShowValidateModal] = useState(false);
-   const [formData, setFormData] = React.useState();
+  React.useEffect(() => {
+    async function getCandidates() {
+      try {
+        let axiosJWT = getAxios();
+        await axiosJWT
+          .get(`/admin/getAllCandidates`)
+          .then((response) => {
+            // console.log(response);
+            if (response.data.status) {
+              // toast.success(response.data.message);
+              setCandidates(response.data.data.candidates);
+            } else {
+              toast.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            toast.error(error.response.data.message);
+          });
+      } catch (e) {
+        console.log(e);
+        toast.error("Faild to update, please try again");
+      }
+    }
 
-   function hideValidateModal() {
-     setShowValidateModal(false);
-   }
+    async function getVoters() {
+      try {
+        let axiosJWT = getAxios();
+        await axiosJWT
+          .get(`/admin/getAllVoters`)
+          .then((response) => {
+            // console.log(response);
+            if (response.data.status) {
+              // toast.success(response.data.message);
+              setVoters(response.data.data.voters);
+            } else {
+              toast.error(response.data.message);
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            toast.error(error.response.data.message);
+          });
+      } catch (e) {
+        console.log(e);
+        toast.error("Faild to update, please try again");
+      }
+    }
 
-    return (
-        <>
-          <main className="adminDashboard">
-            <h4 className="pageTitle mb-1">Dashboard</h4>
-            <div className="card-stats">
-                <div className="col-12 col-md-4 mt-3 mt-md-4 card-style">
-                   <div className="candidate card cardBody">
-                      <h5 className="pageTitle">Total Voters</h5>
-                      <p className="total-count">6,250</p>
-                   </div>
-                </div>
-                <div className="col-12 col-md-4 mt-3 mt-md-4 card-style">
-                   <div className="candidate card cardBody">
-                      <h5 className="pageTitle">Total Candidates</h5>
-                      <p className="total-count">10</p>
-                   </div>
-                </div>
+    if (filter === "Candidates") {
+      getCandidates();
+    } else {
+      getVoters();
+    }
+  }, [filter]);
+
+  function hideValidateModal() {
+    setShowValidateModal(false);
+  }
+
+  return (
+    <>
+      <main className="adminDashboard">
+        <h4 className="pageTitle mb-1">Dashboard</h4>
+        <div className="card-stats">
+          <div className="col-12 col-md-4 mt-3 mt-md-4 card-style">
+            <div className="candidate card cardBody">
+              <h5 className="pageTitle">Total Voters</h5>
+              <p className="total-count">6,250</p>
             </div>
+          </div>
+          <div className="col-12 col-md-4 mt-3 mt-md-4 card-style">
+            <div className="candidate card cardBody">
+              <h5 className="pageTitle">Total Candidates</h5>
+              <p className="total-count">10</p>
+            </div>
+          </div>
+        </div>
 
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                   <h2 class="accordion-header" id="headingOne">
-                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                     Validate Candidates
-                   </button>
-                   </h2>
-                   <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-                          <table class="table table-striped table-hover">
-                              <thead>
-                                 <tr>
-                                   <th scope="col">#</th>
-                                   <th scope="col">Candidates</th>
-                                   <th scope="col">Check Documents</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                   <th scope="row">1</th>
-                                     <td>Pooja Shetty</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal" onClick={(e) => {
-                                        e.preventDefault();
-                                        setShowValidateModal(true);
-                                     }}
-                                     >
-                                       Documents
-                                       </button></td>
-                                 </tr>
-                                 <tr>
-                                   <th scope="row">2</th>
-                                     <td>Akash Maurya</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal" >Documents</button></td>
-                                 </tr>
-                                 <tr>
-                                   <th scope="row">3</th>
-                                     <td>Ganesh Yadava</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
-                                 </tr>
-                                 <tr>
-                                   <th scope="row">3</th>
-                                     <td>Ron Weasley</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#candidateModal">Documents</button></td>
-                                 </tr>
-                              </tbody>  
-                          </table>
-                          <div class="modal fade" id="candidateModal" role="dialog">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                   <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                      <h4 class="modal-title">Modal Header</h4>
-                                   </div>
-                                   <div class="modal-body">
-                                      <p>Some text in the modal.</p>
-                                   </div>
-                                   <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                   </div>
-                              </div>
-      
-                            </div>
-                          </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="accordion-item">
-                   <h2 class="accordion-header" id="headingTwo">
-                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                     Validate Voters
-                   </button>
-                   </h2>
-                   <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-                          <table class="table table-striped table-hover">
-                              <thead>
-                                 <tr>
-                                   <th scope="col">#</th>
-                                   <th scope="col">Candidates</th>
-                                   <th scope="col">Check Documents</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                   <th scope="row">1</th>
-                                     <td>Pooja Shetty</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#exampleModal">Documents</button></td>
-                                 </tr>
-                                 <tr>
-                                   <th scope="row">2</th>
-                                     <td>Akash Maurya</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#exampleModal">Documents</button></td>
-                                 </tr>
-                                 <tr>
-                                   <th scope="row">3</th>
-                                     <td>Ganesh Yadava</td>
-                                     <td><button type="submit" className="verifyBtn" data-toggle="modal" data-target="#exampleModal">Documents</button></td>
-                                 </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                   </div>
-                </div>
-            </div>              
-          </main>
-          <Validate show={showValidateModal} handleModal={hideValidateModal} />
+        <h5 className="mt-5">Verify Users</h5>
+        <div className="mt-3 d-flex align-items-center">
+          <h6>Filter By</h6>
+          <button
+            className={
+              "btn ms-3 mx-4 adminDashboardTabs " +
+              (filter === "Candidates" ? "activeTab" : "")
+            }
+            onClick={() => {
+              setFilter("Candidates");
+            }}
+          >
+            Candidates
+          </button>
+          <button
+            className={
+              "btn adminDashboardTabs " +
+              (filter === "Voters" ? "activeTab" : "")
+            }
+            onClick={() => {
+              setFilter("Voters");
+            }}
+          >
+            Voters
+          </button>
+        </div>
+
+        <table class="table table-hover mt-3">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">{filter === "Candidates" ? "Candidate":"Voter"} Name</th>
+              <th scope="col">Check Documents</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filter === "Candidates" ? (
+              <>
+                {candidates.map((candidate, i) => {
+                  return (
+                    <>
+                      <tr>
+                        <th scope="row">{i + 1}</th>
+                        <td>{candidate.name}</td>
+                        <td>
+                          <button
+                            type="submit"
+                            className="verifyBtn"
+                            onClick={() => {
+                              setShowValidateModal(true);
+                              setSelectedUser(candidate);
+                            }}
+                          >
+                            Documents
+                          </button>
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                {voters.map((voter, i) => {
+                  return (
+                    <>
+                      <tr>
+                        <th scope="row">{i + 1}</th>
+                        <td>{voter.name}</td>
+                        <td>
+                          <button
+                            type="submit"
+                            className="verifyBtn"
+                            onClick={() => {
+                              setShowValidateModal(true);
+                              setSelectedUser(voter);
+                            }}
+                          >
+                            Documents
+                          </button>
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
+              </>
+            )}
+          </tbody>
+        </table>
+      </main>
+
+      {showValidateModal ? (
+        <>
+          <Validate
+            show={showValidateModal}
+            handleModal={hideValidateModal}
+            userData={selectedUser}
+            userType={filter}
+          />
         </>
-        
-    );
+      ) : (
+        <></>
+      )}
+    </>
+  );
 };
 
 export default AdminDashboard;

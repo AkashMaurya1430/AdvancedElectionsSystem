@@ -23,6 +23,32 @@ const Sidebar = () => {
           <div className="nav__list">
             <div className="nav__items">
               {/* Candidate  */}
+              {profile.role === "Admin" ? (
+
+                <>
+ <NavLink
+                    className="nav__link"
+                    activeClassName="nav__link-active"
+                    to={Routes.adminDashboard}
+                  >
+                    <i className="bx bxs-dashboard nav__icon"></i>
+                    <span className="nav__name">Dashboard</span>
+                  </NavLink>
+
+                  <NavLink
+                    className="nav__link"
+                    activeClassName="nav__link-active"
+                    to={Routes.vote}
+                  >
+                    <i className="bx bx-box nav__icon"></i>
+                    <span className="nav__name">Voting</span>
+                  </NavLink>
+                </>
+              ) : (
+                <></>
+              )}
+
+              {/* Candidate  */}
               {profile.role === "Candidate" ? (
                 <>
                   <NavLink
@@ -41,7 +67,6 @@ const Sidebar = () => {
                     <i className="bx bx-user nav__icon"></i>
                     <span className="nav__name">Profile</span>
                   </NavLink>
-                
                 </>
               ) : (
                 <></>
@@ -50,7 +75,6 @@ const Sidebar = () => {
               {/* Voter  */}
               {profile.role === "Voter" ? (
                 <>
-
                   <NavLink
                     className="nav__link"
                     activeClassName="nav__link-active"

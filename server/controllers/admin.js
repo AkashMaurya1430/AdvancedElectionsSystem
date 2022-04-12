@@ -1,5 +1,6 @@
 const Candidate = require("../models/Candidate");
 const Voter = require("../models/Voter");
+const Vote = require("../models/Vote");
 const User = require("../models/User");
 const Slot = require("../models/Slots");
 const bcrypt = require("bcrypt");
@@ -38,7 +39,7 @@ module.exports.createSlot = async (req, res) => {
 module.exports.getAllVoters = async (req, res) => {
   let response = { status: false, message: "", data: {} };
 
-  await Voter.find({})
+  await Voter.find({isVerified:false})
     .then((voters) => {
       console.log(voters);
       if (voters.length) {
@@ -61,27 +62,24 @@ module.exports.getAllVoters = async (req, res) => {
 module.exports.getAllCandidates = async (req, res) => {
   let response = { status: false, message: "", data: {} };
 
-  await Candidate.find({  })
-  .then((candidates) => {
-    console.log(candidates);
-    if (candidates.length) {
-      response.status = true;
-      response.message = "Candidates Found";
-      response.data.candidates = candidates;
-      res.status(200).send(response);
-    } else {
-      response.message = "No Candidates Found";
-      res.status(200).send(response);
-    }
-  })
-  .catch((err) => {
-    response.message = "Failed to Fetch Candidates";
-    response.errMessage = err;
-    res.status(500).send(response);
-  });
+  await Candidate.find({isVerified:false})
+    .then((candidates) => {
+      if (candidates.length) {
+        response.status = true;
+        response.message = "Candidates Found";
+        response.data.candidates = candidates;
+        res.status(200).send(response);
+      } else {
+        response.message = "No Candidates Found";
+        res.status(200).send(response);
+      }
+    })
+    .catch((err) => {
+      response.message = "Failed to Fetch Candidates";
+      response.errMessage = err;
+      res.status(500).send(response);
+    });
 };
-
-
 
 module.exports.approveCandidate = async (req, res) => {
   let response = { status: false, message: "" };
@@ -135,7 +133,6 @@ module.exports.approveVoter = async (req, res) => {
     });
 };
 
-
 // For casting vote
 module.exports.getVoterData = async (req, res) => {
   let response = { status: false, message: "", data: {} };
@@ -150,6 +147,14 @@ module.exports.getVoterData = async (req, res) => {
       return res.status(200).send(response);
     }
 
+    // Check if he has already casted his vote
+    let voteCasted = await Vote.findOne({ "userId.email": email });
+
+    if (voteCasted) {
+      response.message = "Voter has already casted the vote";
+      return res.status(200).send(response);
+    }
+
     await User.findOne({ email })
       .populate("role")
       .then((user) => {
@@ -157,6 +162,7 @@ module.exports.getVoterData = async (req, res) => {
           if (bcrypt.compareSync(password, user.password)) {
             if (user.roleModel === "Voter") {
               response.status = true;
+              user.password = "";
               response.data = {
                 user,
               };
@@ -183,13 +189,12 @@ module.exports.getVoterData = async (req, res) => {
   }
 };
 
-
 module.exports.getCandidates = async (req, res) => {
   let response = { status: false, message: "", data: {} };
 
   await Candidate.find({ isVerified: true })
     .then((candidates) => {
-      console.log(candidates);
+      // console.log(candidates);
       if (candidates.length) {
         response.status = true;
         response.message = "Candidates Found";
@@ -207,3 +212,51 @@ module.exports.getCandidates = async (req, res) => {
     });
 };
 
+module.exports.voteCandidate = async (req, res) => {
+  let response = { status: false, message: "" };
+
+  const { candidateId, voterId } = req.body;
+
+  try {
+    let candidateData = await Candidate.findOne({
+      _id: candidateId,
+      isVerified: true,
+    });
+
+    if (!candidateData) {
+      response.message = "Candidate Not Found";
+      return res.status(200).send(response);
+    }
+
+    let voterData = await Voter.findOne({ _id: voterId });
+
+    if (!voterData) {
+      response.message = "Voter Not Found";
+      return res.status(200).send(response);
+    }
+
+    // Check if he has already casted his vote
+    let voteCasted = await Vote.findOne({ voterId });
+
+    if (voteCasted) {
+      response.message = "Voter has already casted the vote";
+      return res.status(200).send(response);
+    }
+
+    // Create a new vote
+    let newVote = new Vote({
+      voterId: voterData._id,
+      candidateId: candidateData._id,
+    });
+
+    await newVote.save();
+
+    response.status = true;
+    response.message = "Vote Casted Successfully";
+    res.status(201).send(response);
+  } catch (err) {
+    response.errMessage = err;
+    response.message = "Failed to cast vote";
+    res.status(200).send(response);
+  }
+};

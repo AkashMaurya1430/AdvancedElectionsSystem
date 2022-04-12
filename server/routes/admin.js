@@ -25,7 +25,7 @@ router.post("/getVoterData",security.isAuth,security.checkRole(["Admin"]),adminC
 // For Voting
 router.get("/getCandidates",security.isAuth,security.checkRole(["Admin"]),adminController.getCandidates)
 
-
+router.post("/castVote",security.isAuth,security.checkRole(["Admin"]),adminController.voteCandidate)
 
 
 

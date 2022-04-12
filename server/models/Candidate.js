@@ -27,7 +27,7 @@ const candidateSchema = mongoose.Schema(
     },
     isVerified: {
       type: Boolean,
-      default: true,
+      default: false,
       required: true,
     },
     electionAgendas: [
@@ -36,6 +36,17 @@ const candidateSchema = mongoose.Schema(
         description: String,
       },
     ],
+    socials: {
+      twitter: {
+        type: String,
+      },
+      instagram: {
+        type: String,
+      },
+      facebook: {
+        type: String,
+      },
+    },
   },
   { timestamps: true }
 );

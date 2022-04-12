@@ -62,7 +62,7 @@ const Campaigns = () => {
                       </a>
                     </h6>
                   </div>
-                  <h6 className="campaignTitle mt-3">{campaign.body}</h6>
+                  <h6 className="campaignTitle mt-2">{campaign.body}</h6>
                   {campaign.image ? (
                     <img
                       src={campaign.image}
