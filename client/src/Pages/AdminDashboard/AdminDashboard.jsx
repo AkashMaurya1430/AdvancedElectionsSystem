@@ -69,7 +69,7 @@ const AdminDashboard = () => {
     // } else {
     getVoters();
     // }
-  }, [filter]);
+  }, []);
 
   function hideValidateModal() {
     setShowValidateModal(false);

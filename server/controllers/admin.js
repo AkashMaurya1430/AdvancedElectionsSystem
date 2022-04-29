@@ -5,6 +5,7 @@ const User = require("../models/User");
 const Slot = require("../models/Slots");
 const bcrypt = require("bcrypt");
 
+
 module.exports.createSlot = async (req, res) => {
   let response = { status: false, message: "" };
   const { startTime, endTime, size } = req.body;
@@ -259,4 +260,43 @@ module.exports.voteCandidate = async (req, res) => {
     response.message = "Failed to cast vote";
     res.status(200).send(response);
   }
+};
+
+module.exports.getVotes = async (req, res) => {
+  let response = { status: false, message: "", data: {} };
+
+  let voters = await Voter.find({})
+
+  let candidates = await Candidate.find({})
+  // .then((temp)=>{
+    
+  //   temp.forEach(candidate=>{
+  //     candidate.votes = Vote.find({candidateId:temp._id})
+  //   })
+  //   return temp
+  // })
+
+
+  // console.log(candidates);
+
+  await Vote.find({}).populate("candidateId")
+    .then((votes) => {
+      // console.log(candidates);
+      if (votes.length) {
+        response.status = true;
+        response.message = "Votes Fetched";
+        response.data.votes = votes;
+        response.data.voters = voters;
+        response.data.candidates = candidates;
+        res.status(200).send(response);
+      } else {
+        response.message = "No Votes Found";
+        res.status(200).send(response);
+      }
+    })
+    .catch((err) => {
+      response.message = "Failed to Fetch Votes";
+      response.errMessage = err;
+      res.status(500).send(response);
+    });
 };

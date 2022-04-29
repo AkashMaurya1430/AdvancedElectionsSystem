@@ -132,7 +132,7 @@ const EachCandidate = () => {
               </div>
             </div>
           </>
-        ) : (
+        ) : ( 
           <h4>Candidate Not Found</h4>
         )}
       </main>

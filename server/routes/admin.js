@@ -27,8 +27,6 @@ router.get("/getCandidates",security.isAuth,security.checkRole(["Admin"]),adminC
 
 router.post("/castVote",security.isAuth,security.checkRole(["Admin"]),adminController.voteCandidate)
 
-
-
-
+router.get("/votes",security.isAuth,security.checkRole(["Admin"]),adminController.getVotes)
 
 module.exports = router;
