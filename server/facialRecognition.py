@@ -1,4 +1,4 @@
-print("Running Code....")
+# print("Running Code....")
 # python -m pip install cmake
 import cv2
 # python -m pip install opencv-python
@@ -24,7 +24,15 @@ cv2.rectangle(imgTest, (faceLocTest[3], faceLocTest[0]), (faceLocTest[1], faceLo
 
 results = face_recognition.compare_faces([encodeElon], encodeTest)
 faceDis = face_recognition.face_distance([encodeElon], encodeTest)
-print(results)
+ans = {
+    results[0]
+}
+print(ans)
+
+
+# f = open("demo.txt", "w")
+# f.write(results)
+# f.close()
 # cv2.putText(imgTest, f'{results} {round(faceDis[0], 2)}', (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 255), 2)
 
 # cv2.imshow('Elon Musk', imgElon)

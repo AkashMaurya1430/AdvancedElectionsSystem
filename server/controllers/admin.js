@@ -4,7 +4,8 @@ const Vote = require("../models/Vote");
 const User = require("../models/User");
 const Slot = require("../models/Slots");
 const bcrypt = require("bcrypt");
-
+var base64ToImage = require("base64-to-image");
+const spawn = require("child_process").spawn;
 
 module.exports.createSlot = async (req, res) => {
   let response = { status: false, message: "" };
@@ -40,7 +41,7 @@ module.exports.createSlot = async (req, res) => {
 module.exports.getAllVoters = async (req, res) => {
   let response = { status: false, message: "", data: {} };
 
-  await Voter.find({isVerified:false})
+  await Voter.find({ isVerified: false })
     .then((voters) => {
       console.log(voters);
       if (voters.length) {
@@ -63,7 +64,7 @@ module.exports.getAllVoters = async (req, res) => {
 module.exports.getAllCandidates = async (req, res) => {
   let response = { status: false, message: "", data: {} };
 
-  await Candidate.find({isVerified:false})
+  await Candidate.find({ isVerified: false })
     .then((candidates) => {
       if (candidates.length) {
         response.status = true;
@@ -265,21 +266,12 @@ module.exports.voteCandidate = async (req, res) => {
 module.exports.getVotes = async (req, res) => {
   let response = { status: false, message: "", data: {} };
 
-  let voters = await Voter.find({})
+  let voters = await Voter.find({});
 
-  let candidates = await Candidate.find({})
-  // .then((temp)=>{
-    
-  //   temp.forEach(candidate=>{
-  //     candidate.votes = Vote.find({candidateId:temp._id})
-  //   })
-  //   return temp
-  // })
+  let candidates = await Candidate.find({});
 
-
-  // console.log(candidates);
-
-  await Vote.find({}).populate("candidateId")
+  await Vote.find({})
+    .populate("candidateId")
     .then((votes) => {
       // console.log(candidates);
       if (votes.length) {
@@ -299,4 +291,48 @@ module.exports.getVotes = async (req, res) => {
       response.errMessage = err;
       res.status(500).send(response);
     });
+};
+
+module.exports.compareVoterImage = async (req, res) => {
+  let response = { status: false, message: "", data: {} };
+
+  try {
+    var base64Str = req.body.voterImage;
+    var path = "./public/webCamImage/";
+    var optionalObj = { fileName: "webIMage", type: "jpg" };
+
+    var imageInfo = base64ToImage(base64Str, path, optionalObj);
+
+    const webCamImage = "./public/webCamImage/webImage.jpg";
+    const voterDbImage = `./public/images/profilePic/${req.body.voterDBImage}`;
+
+    var process = spawn("python", [
+      "facialRecognition.py",
+      webCamImage,
+      voterDbImage,
+    ]);
+    let scriptOutput = "";
+    // Takes stdout data from script which executed
+    // with arguments and send this data to res object
+    process.stdout.on("data", function (data) {
+      // console.log(data.toString(),"A");
+      data = data;
+      scriptOutput += data;
+      console.log(scriptOutput,"S");
+      if (data.toString() == "True") {
+        response.status = true;
+        response.message = "Voter Verified Successfully";
+      } else {
+        response.status = false;
+        response.message = "Voter Image Does not match";
+      }
+
+      res.send(response);
+    });
+
+  } catch (e) {
+    response.message = "Please try again later";
+    response.errMessage = e;
+    res.status(500).send(response);
+  }
 };
