@@ -7,10 +7,10 @@ const initRoutes = require("./routes/index");
 // Initializing DB
 initDB();
 
-// Initializing Middlewares
+// Initializing 
 initMiddlewares(app);
 
-// Initializing Routes
+// Initializing 
 initRoutes(app);
 
 app.listen(5000, () => {
