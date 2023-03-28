@@ -4,7 +4,7 @@ const initDB = require("./config/initDb");
 const initMiddlewares = require("./middlewares/index");
 const initRoutes = require("./routes/index");
 
-// Initializing 
+// Initializing DB
 initDB();
 
 // Initializing Middlewares
